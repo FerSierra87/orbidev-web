@@ -1,0 +1,53 @@
+/* STREAMING_CHUNK: Importing Tailwind v4 CSS... */
+@import "tailwindcss";
+
+/* STREAMING_CHUNK: Defining Custom Theme Tokens... */
+@theme {
+--font-sans: 'Outfit', sans-serif;
+--font-mono: 'Fira Code', monospace;
+
+--color-cyber-dark: #030712;
+--color-cyber-panel: #0b0f19;
+--color-cyber-border: #1e293b;
+--color-cyber-purple: #7c3aed;
+--color-cyber-blue: #3b82f6;
+--color-cyber-cyan: #38bdf8;
+--color-cyber-emerald: #10b981;
+}
+
+/* STREAMING_CHUNK: Setting Global Layout Elements... */
+body {
+margin: 0;
+background-color: var(--color-cyber-dark);
+color: #f1f5f9;
+overflow: hidden;
+}
+
+/* Custom scrollbar styling to fit the OS aesthetic */
+::-webkit-scrollbar {
+width: 8px;
+height: 8px;
+}
+
+::-webkit-scrollbar-track {
+background: var(--color-cyber-panel);
+border-left: 1px solid var(--color-cyber-border);
+}
+
+::-webkit-scrollbar-thumb {
+background: var(--color-cyber-border);
+border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: var(--color-cyber-cyan);
+}
+
+/* Subtle glow animation for active elements */
+@keyframes neonGlow {
+0%, 100% { box-shadow: 0 0 15px rgba(124, 58, 237, 0.2); }
+50% { box-shadow: 0 0 25px rgba(124, 58, 237, 0.4); }
+}
+.glow-active {
+animation: neonGlow 3s infinite;
+}
