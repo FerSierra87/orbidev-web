@@ -123,7 +123,7 @@ export default function App() {
       longDesc: 'Construido como una SPA en React, utiliza Firebase Firestore para gestionar contenidos del portafolio dinámicamente y Firebase Hosting para asegurar tiempos de respuesta por debajo de los 1.5 segundos a nivel global. El proyecto utiliza Tailwind CSS para simular perfectamente un entorno de escritorio retro-futurista.',
       icon: 'fa-window-restore',
       color: 'text-cyber-cyan',
-      github: 'https://github.com/FerSierra87/portafolio_os'
+      github: 'https://github.com/FerSierra87/portafolio-os'
     },
     {
       id: 2,
