@@ -123,7 +123,7 @@ export default function App() {
       longDesc: 'Construido como una SPA en React, utiliza Firebase Firestore para gestionar contenidos del portafolio dinámicamente y Firebase Hosting para asegurar tiempos de respuesta por debajo de los 1.5 segundos a nivel global. El proyecto utiliza Tailwind CSS para simular perfectamente un entorno de escritorio retro-futurista.',
       icon: 'fa-window-restore',
       color: 'text-cyber-cyan',
-      github: '#'
+      github: 'https://github.com/FerSierra87/portafolio_os'
     },
     {
       id: 2,
@@ -133,7 +133,7 @@ export default function App() {
       longDesc: 'Desarrollo de un script automatizado para procesar grandes flujos de datos estructurados (XLSX, CSV) y migrarlos de forma limpia hacia bases de datos relacionales PostgreSQL/MySQL. Ideal para optimizar tareas repetitivas en administraciones medianas o PyMEs.',
       icon: 'fa-database',
       color: 'text-cyber-emerald',
-      github: '#'
+      github: 'https://github.com/FerSierra87/sql-python-data-migration'
     },
     {
       id: 3,
@@ -143,7 +143,7 @@ export default function App() {
       longDesc: 'Inspirado en la trinchera del soporte técnico masivo. Diseñé un modelo lógico para catalogar errores de hardware, redes y accesos de usuarios, ayudando a reducir los tiempos de escalado del soporte de Nivel 1 a Nivel 2.',
       icon: 'fa-headset',
       color: 'text-cyber-purple',
-      github: '#'
+      github: 'https://github.com/FerSierra87/panel-control-l1'
     }
   ];
 
