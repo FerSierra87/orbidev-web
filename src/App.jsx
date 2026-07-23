@@ -554,6 +554,153 @@ ${ticket.desc || 'Quiero recibir más información.'}
     </article>
   </div>
 </section>
+{/* QUIÉN ESTÁ DETRÁS DE ORBIDEV */}
+<section className="space-y-6">
+  <div className="space-y-3">
+    <span className="font-mono text-xs tracking-[0.2em] text-cyber-cyan">
+      SOBRE ORBIDEV
+    </span>
+
+    <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-white">
+      Quién está detrás de Orbidev
+    </h2>
+
+    <p className="max-w-3xl text-sm sm:text-base text-slate-400 leading-relaxed">
+      Orbidev es un emprendimiento tecnológico creado por Fernando Sierra,
+      desarrollador y estudiante de Tecnologías de la Información en UTEC,
+      con experiencia en desarrollo de proyectos, soporte técnico, bases de
+      datos y creación de soluciones digitales adaptadas a necesidades reales.
+    </p>
+  </div>
+
+  <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-5">
+    <article className="relative overflow-hidden bg-cyber-dark/60 border border-cyber-border rounded-xl p-5 sm:p-7">
+      <div className="absolute -right-12 -top-12 w-40 h-40 bg-cyber-purple/10 rounded-full blur-3xl"></div>
+
+      <div className="relative flex flex-col sm:flex-row items-start gap-5">
+        <div className="w-16 h-16 shrink-0 rounded-2xl bg-cyber-purple/10 border border-cyber-purple/30 flex items-center justify-center">
+          <img
+            src="/orbidev-isotipo.svg"
+            alt="Isotipo de Orbidev"
+            className="w-10 h-10 object-contain"
+          />
+        </div>
+
+        <div className="space-y-4">
+          <div>
+            <h3 className="font-display text-xl text-white">
+              Fernando Sierra
+            </h3>
+
+            <p className="mt-1 font-mono text-xs text-cyber-cyan">
+              DESARROLLO · SOPORTE · SOLUCIONES DIGITALES
+            </p>
+          </div>
+
+          <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
+            Orbidev combina conocimientos técnicos con experiencia práctica en
+            proyectos y soporte para transformar ideas, tareas manuales y
+            necesidades empresariales en soluciones digitales funcionales.
+          </p>
+
+          <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
+            Cada proyecto se trabaja de forma directa y personalizada,
+            priorizando la claridad, la comunicación y la posibilidad de
+            comenzar con una solución pequeña que pueda evolucionar con el
+            negocio.
+          </p>
+
+          <button
+            type="button"
+            onClick={() => navigateTo('soporte')}
+            className="inline-flex items-center justify-center gap-2 border border-cyber-cyan/40 hover:border-cyber-cyan bg-cyber-cyan/5 hover:bg-cyber-cyan/10 text-cyber-cyan font-mono text-xs px-4 py-2.5 rounded-lg transition-all cursor-pointer"
+          >
+            <i className="fa-regular fa-comment-dots"></i>
+            CONVERSEMOS SOBRE TU PROYECTO
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+      <article className="bg-cyber-dark/60 border border-cyber-border hover:border-cyber-cyan/40 rounded-xl p-5 transition-colors">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 shrink-0 rounded-lg bg-cyber-cyan/10 flex items-center justify-center text-cyber-cyan">
+            <i className="fa-solid fa-code"></i>
+          </div>
+
+          <div>
+            <h3 className="font-display text-sm text-white">
+              Desarrollo de proyectos
+            </h3>
+
+            <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+              Creación de sitios web, aplicaciones y sistemas orientados a
+              resolver problemas concretos.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <article className="bg-cyber-dark/60 border border-cyber-border hover:border-cyber-purple/40 rounded-xl p-5 transition-colors">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 shrink-0 rounded-lg bg-cyber-purple/10 flex items-center justify-center text-cyber-purple">
+            <i className="fa-solid fa-headset"></i>
+          </div>
+
+          <div>
+            <h3 className="font-display text-sm text-white">
+              Experiencia en soporte
+            </h3>
+
+            <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+              Análisis de incidencias, diagnóstico de problemas y acompañamiento
+              técnico a usuarios.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <article className="bg-cyber-dark/60 border border-cyber-border hover:border-cyber-emerald/40 rounded-xl p-5 transition-colors">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 shrink-0 rounded-lg bg-cyber-emerald/10 flex items-center justify-center text-cyber-emerald">
+            <i className="fa-solid fa-database"></i>
+          </div>
+
+          <div>
+            <h3 className="font-display text-sm text-white">
+              Tecnología y datos
+            </h3>
+
+            <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+              Experiencia con React, Java, Spring Boot, Firebase, Supabase,
+              PostgreSQL y automatización de datos.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <article className="bg-cyber-dark/60 border border-cyber-border hover:border-cyber-blue/40 rounded-xl p-5 transition-colors">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 shrink-0 rounded-lg bg-cyber-blue/10 flex items-center justify-center text-cyber-blue">
+            <i className="fa-solid fa-handshake"></i>
+          </div>
+
+          <div>
+            <h3 className="font-display text-sm text-white">
+              Atención personalizada
+            </h3>
+
+            <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+              Comunicación directa durante todo el proceso, desde la idea
+              inicial hasta la puesta en funcionamiento.
+            </p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
 
 {/* LLAMADO A LA ACCIÓN */}
 <section className="relative overflow-hidden bg-cyber-dark/50 border border-cyber-border rounded-2xl p-6 sm:p-8">
