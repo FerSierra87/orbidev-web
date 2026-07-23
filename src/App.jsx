@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useForm, ValidationError } from '@formspree/react';
 
 export default function App() {
   // Estado para controlar la sección o pestaña activa
@@ -25,9 +26,16 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   
   // Estado para el simulador de tickets de soporte técnico de Nivel 1 (formulario)
-  const [ticket, setTicket] = useState({ name: '', email: '', desc: '', tipo: 'landing' });
-  const [isTicketSubmitted, setIsTicketSubmitted] = useState(false);
+ // Estado del formulario de contacto
+const [ticket, setTicket] = useState({
+  name: '',
+  email: '',
+  desc: '',
+  tipo: 'landing',
+});
 
+// Conexión con el formulario de Formspree
+const [formState, handleFormSubmit] = useForm('xojgkepz');
   // Referencias para el contenedor de scroll y el final de la terminal
   const scrollContainerRef = useRef(null);
   const terminalEndRef = useRef(null);
@@ -171,8 +179,36 @@ const getMascotMessage = () => {
   demo: 'https://helpdesk-core-one.web.app',
 },
 ];
+const openWhatsApp = () => {
+  const serviceLabels = {
+    landing: 'Sitio web o landing page',
+    system: 'Sistema a medida',
+    automation: 'Automatización de procesos',
+    ecommerce: 'Tienda online',
+    consulting: 'Consultoría tecnológica',
+    other: 'Otra consulta',
+  };
 
-  // Envía el formulario simulado de incidentes informáticos
+  const selectedService =
+    serviceLabels[ticket.tipo] || 'Consulta general';
+
+  const message = `
+Hola Orbidev, quiero realizar una consulta.
+
+Nombre o empresa: ${ticket.name || 'No especificado'}
+Servicio: ${selectedService}
+Correo: ${ticket.email || 'No especificado'}
+
+Consulta:
+${ticket.desc || 'Quiero recibir más información.'}
+  `.trim();
+
+  const whatsappUrl = `https://wa.me/59899452312?text=${encodeURIComponent(message)}`;
+
+  window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+};
+
+  /* Envía el formulario simulado de incidentes informáticos
   const submitTicket = (e) => {
     e.preventDefault();
     setIsTicketSubmitted(true);
@@ -180,7 +216,8 @@ const getMascotMessage = () => {
       setIsTicketSubmitted(false);
       setTicket({ name: '', email: '', desc: '', tipo: 'landing' });
     }, 4000);
-  };
+  };*/
+  
 
   return (
     <div className="w-full h-screen bg-cyber-panel overflow-hidden relative flex flex-col glow-active">
@@ -841,7 +878,7 @@ const getMascotMessage = () => {
         </div>
       </div>
 
-      {isTicketSubmitted ? (
+      {formState.succeeded ? (
         <div className="bg-cyber-emerald/10 border border-cyber-emerald/30 p-6 sm:p-8 rounded-xl space-y-4 text-center flex flex-col justify-center min-h-96">
           <i className="fa-solid fa-circle-check text-5xl text-cyber-emerald"></i>
 
@@ -860,7 +897,7 @@ const getMascotMessage = () => {
         </div>
       ) : (
         <form
-          onSubmit={submitTicket}
+          onSubmit={handleFormSubmit}
           className="space-y-5 bg-cyber-dark/40 border border-cyber-border p-5 sm:p-8 rounded-xl"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -868,12 +905,13 @@ const getMascotMessage = () => {
               <label
                 htmlFor="contact-name"
                 className="text-xs font-mono text-slate-400"
-              >
+              >q
                 Nombre o empresa
               </label>
 
               <input
                 id="contact-name"
+                name="name"
                 type="text"
                 required
                 value={ticket.name}
@@ -883,6 +921,12 @@ const getMascotMessage = () => {
                 placeholder="Ej: Comercio del Centro"
                 className="w-full bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyber-cyan"
               />
+                    <ValidationError
+                        prefix="Nombre"
+                        field="name"
+                         errors={formState.errors}
+                       className="text-xs text-red-400 mt-1"
+                    />
             </div>
 
             <div className="space-y-1.5">
@@ -896,6 +940,7 @@ const getMascotMessage = () => {
               <input
                 id="contact-email"
                 type="email"
+                name="email"
                 required
                 value={ticket.email}
                 onChange={(e) =>
@@ -904,6 +949,12 @@ const getMascotMessage = () => {
                 placeholder="nombre@empresa.com"
                 className="w-full bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyber-cyan"
               />
+                      <ValidationError
+                        prefix="Correo"
+                        field="email"
+                        errors={formState.errors}
+                        className="text-xs text-red-400 mt-1"
+                      />
             </div>
           </div>
 
@@ -917,6 +968,7 @@ const getMascotMessage = () => {
 
             <select
               id="contact-service"
+              name="service"
               value={ticket.tipo}
               onChange={(e) =>
                 setTicket({ ...ticket, tipo: e.target.value })
@@ -959,6 +1011,7 @@ const getMascotMessage = () => {
 
             <textarea
               id="contact-description"
+              name="message"
               rows="5"
               required
               value={ticket.desc}
@@ -968,19 +1021,51 @@ const getMascotMessage = () => {
               placeholder="Contanos brevemente tu necesidad, problema o idea..."
               className="w-full resize-none bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyber-cyan"
             ></textarea>
+              <ValidationError
+                prefix="Mensaje"
+                field="message"
+                errors={formState.errors}
+                className="text-xs text-red-400 mt-1"
+              />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono py-3 rounded-lg text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-cyber-purple/20 font-bold"
+            disabled={formState.submitting}
+            className="w-full bg-cyber-purple hover:bg-cyber-purple/80 disabled:opacity-50 disabled:cursor-not-allowed text-white font-mono py-3 rounded-lg text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-cyber-purple/20 font-bold"
           >
-            <i className="fa-regular fa-paper-plane"></i>
-            ENVIAR CONSULTA
-          </button>
+            {formState.submitting ? (
+              <>
+                <i className="fa-solid fa-spinner animate-spin"></i>
+                ENVIANDO...
+              </>
+            ) : (
+              <>
+                <i className="fa-regular fa-paper-plane"></i>
+                ENVIAR CONSULTA
+                  </>
+                )}
+              </button>
+
+              <div className="flex items-center gap-3 py-1">
+                <div className="h-px flex-1 bg-cyber-border"></div>
+                <span className="text-[10px] font-mono text-slate-500">O CONTACTANOS POR</span>
+                <div className="h-px flex-1 bg-cyber-border"></div>
+              </div>
+
+             
+            
+              <button
+                type="button"
+                onClick={openWhatsApp}
+                className="w-full border border-cyber-emerald/50 bg-cyber-emerald/10 hover:bg-cyber-emerald/20 hover:border-cyber-emerald text-cyber-emerald font-mono py-3 rounded-lg text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <i className="fa-brands fa-whatsapp text-lg"></i>
+                CONSULTAR POR WHATSAPP
+              </button>
 
           <p className="text-[10px] text-slate-500 text-center font-mono">
-            Esta versión todavía simula el envío. Luego conectaremos el
-            formulario con un servicio real.
+            Tus datos serán utilizados únicamente para responder esta consulta.
           </p>
         </form>
       )}
