@@ -181,10 +181,21 @@ export default function App() {
             <i className={`fa-solid ${isSidebarOpen ? 'fa-xmark' : 'fa-bars'} text-lg`}></i>
           </button>
 
-          <i className="fa-solid fa-microchip text-cyber-cyan animate-pulse text-sm hidden sm:inline-block"></i>
-          <span className="font-mono text-[11px] sm:text-xs tracking-wider sm:tracking-widest text-slate-400 truncate max-w-50 sm:max-w-none">
-            PORTAFOLIO_OS.EXE // SISTEMA
-          </span>
+          <img
+  src="/orbidev-isotipo.svg"
+  alt="Isotipo de Orbidev"
+  className="w-7 h-7 object-contain"
+/>
+
+<div className="flex flex-col leading-none">
+  <span className="font-display text-xs sm:text-sm tracking-[0.18em] text-white">
+    ORBIDEV
+  </span>
+
+  <span className="hidden sm:block mt-1 font-mono text-[8px] tracking-[0.2em] text-cyber-cyan">
+    SOLUCIONES DIGITALES
+  </span>
+</div>
         </div>
         
         {/* CONTROLES DE LA VENTANA */}
@@ -302,27 +313,59 @@ export default function App() {
           {activeTab === 'inicio' && (
             <div className="p-4 sm:p-6 md:p-10 space-y-10 md:space-y-16 max-w-5xl">
               
-              {/* PRESENTACIÓN */}
-              <div className="space-y-4 md:space-y-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyber-cyan/10 border border-cyber-cyan/20 rounded-full text-[10px] sm:text-xs font-mono text-cyber-cyan max-w-full">
-                  <span className="w-1.5 h-1.5 bg-cyber-cyan rounded-full animate-ping shrink-0"></span>
-                  <span className="truncate">DISPONIBLE PARA PROYECTOS / EMPRENDIMIENTO</span>
-                </div>
-                <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-none bg-linear-to-r from-violet-400 via-cyber-cyan to-cyber-emerald bg-clip-text text-transparent">
-                  Full-Stack Developer &amp; Data Consultant
-                </h1>
-                <p className="text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl">
-                  Full-Stack Developer que construye sistemas de punta a punta: APIs en <span className="text-cyber-cyan font-mono">Java</span> y <span className="text-cyber-cyan font-mono">Spring Boot</span>, interfaces en <span className="text-cyber-cyan font-mono">React</span>, y bases de datos <span className="text-cyber-emerald font-mono">SQL</span> gestionadas con <span className="text-cyber-emerald font-mono">Python</span> — todo respaldado por la agilidad técnica real de un <span className="text-cyber-purple">Soporte de Sistemas L1</span>.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                  <button onClick={() => navigateTo('proyectos')} className="bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg shadow-cyber-purple/20 text-sm">
-                    <i className="fa-solid fa-terminal text-xs"></i> Explorar Proyectos
-                  </button>
-                  <button onClick={() => navigateTo('soporte')} className="border border-cyber-border hover:bg-slate-800/40 text-slate-300 font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer text-sm">
-                    <i className="fa-solid fa-headset text-xs"></i> Levantar Ticket L1
-                  </button>
-                </div>
-              </div>
+             {/* PRESENTACIÓN */}
+          <div className="space-y-4 md:space-y-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyber-emerald/10 border border-cyber-emerald/20 rounded-full text-[10px] sm:text-xs font-mono text-cyber-emerald max-w-full">
+             <span className="w-1.5 h-1.5 bg-cyber-emerald rounded-full animate-pulse shrink-0"></span>
+
+    <span className="truncate">
+      DISPONIBLE PARA NUEVOS PROYECTOS
+    </span>
+  </div>
+
+  <h1 className="text-3xl sm:text-5xl md:text-7xl font-display font-bold tracking-tight leading-tight bg-linear-to-r from-cyber-purple via-cyber-blue to-cyber-cyan bg-clip-text text-transparent">
+    Soluciones digitales para empresas
+  </h1>
+
+  <p className="text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl">
+    En Orbidev desarrollamos{' '}
+    <span className="text-cyber-cyan font-medium">
+      sitios web
+    </span>
+    ,{' '}
+    <span className="text-cyber-cyan font-medium">
+      tiendas online
+    </span>
+    ,{' '}
+    <span className="text-cyber-purple font-medium">
+      sistemas a medida
+    </span>{' '}
+    y{' '}
+    <span className="text-cyber-emerald font-medium">
+      automatizaciones
+    </span>{' '}
+    que ayudan a pequeñas y medianas empresas a organizar sus procesos,
+    ahorrar tiempo y crecer.
+  </p>
+
+  <div className="flex flex-col sm:flex-row gap-3 pt-2">
+    <button
+      onClick={() => navigateTo('proyectos')}
+      className="bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg shadow-cyber-purple/20 text-sm"
+    >
+      <i className="fa-solid fa-layer-group text-xs"></i>
+      Ver proyectos
+    </button>
+
+    <button
+      onClick={() => navigateTo('soporte')}
+      className="border border-cyber-cyan/30 hover:border-cyber-cyan text-slate-200 hover:text-cyber-cyan font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer text-sm"
+    >
+      <i className="fa-regular fa-comment-dots text-xs"></i>
+      Contanos tu necesidad
+    </button>
+  </div>
+</div>
 
               {/* SECCIÓN DE DATOS Y METRICAS */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
