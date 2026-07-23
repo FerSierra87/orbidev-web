@@ -112,49 +112,54 @@ export default function App() {
 
   // Proyectos reales, con sus repositorios y demos en vivo
   const projectsData = [
-    {
-      id: 1,
-      title: 'Portafolio_OS',
-      tag: 'React + Firebase',
-      desc: 'Sitio interactivo estilo sistema operativo que simula ventanas flotantes, consola real y monitores de carga.',
-      longDesc: 'Construido como una SPA en React, utiliza Firebase Firestore para gestionar contenidos del portafolio dinámicamente y Firebase Hosting para asegurar tiempos de respuesta por debajo de los 1.5 segundos a nivel global. El proyecto utiliza Tailwind CSS para simular perfectamente un entorno de escritorio retro-futurista.',
-      icon: 'fa-window-restore',
-      color: 'text-cyber-cyan',
-      github: '#'
-    },
-    {
-      id: 2,
-      title: 'Automatización SQL & Python',
-      tag: 'Data Pipeline',
-      desc: 'Script en Python para limpiar y migrar archivos CSV/XLSX hacia bases de datos relacionales PostgreSQL/MySQL.',
-      longDesc: 'Herramienta de línea de comandos que normaliza nombres de columnas, elimina duplicados y filas vacías, genera un reporte de estadísticas, y migra el resultado a PostgreSQL o MySQL usando SQLAlchemy. Ideal para optimizar tareas repetitivas de carga de datos en administraciones medianas o PyMEs.',
-      icon: 'fa-database',
-      color: 'text-cyber-emerald',
-      github: 'https://github.com/FerSierra87/sql-python-data-migration'
-    },
-    {
-      id: 3,
-      title: 'Panel Control L1',
-      tag: 'Infraestructura',
-      desc: 'Motor de clasificación de tickets de soporte técnico: categoriza por Hardware, Redes o Accesos y sugiere si escalar a Nivel 2.',
-      longDesc: 'Sistema de triage inspirado en la trinchera del soporte técnico masivo. Un motor de reglas por palabras clave categoriza cada ticket automáticamente, le asigna prioridad, y sugiere si conviene resolverlo en Nivel 1 o escalarlo a Nivel 2. Incluye un dashboard con métricas en vivo.',
-      icon: 'fa-headset',
-      color: 'text-cyber-purple',
-      github: 'https://github.com/FerSierra87/panel-control-l1'
-    },
-    {
-      id: 4,
-      title: 'Helpdesk Core',
-      tag: 'Java + Spring Boot + React',
-      desc: 'Sistema full-stack de gestión de clientes, equipos y tickets, con backend en Java/Spring Boot y frontend en React.',
-      longDesc: 'API REST en Java (Spring Boot) con un modelo relacional real en PostgreSQL: un Cliente tiene varios Equipos, y cada Equipo puede tener varios Tickets. El backend está desplegado con Docker en Render, y el frontend en React consume la API en vivo, desplegado en Firebase Hosting. Incluye dashboard con métricas, CRUD completo de las 3 entidades, y CORS configurado entre ambos servicios.',
-      icon: 'fa-server',
-      color: 'text-amber-400',
-      github: 'https://github.com/FerSierra87/helpdesk-core',
-      githubFrontend: 'https://github.com/FerSierra87/helpdesk-core-frontend',
-      demo: 'https://helpdesk-core-one.web.app'
-    }
-  ];
+  {
+    id: 1,
+    title: 'Sitio corporativo Orbidev',
+    tag: 'Java + Spring Boot + React + PostgreSQL',
+    desc: 'Sitio web corporativo responsive con identidad visual propia, navegación interactiva y enfoque comercial.',
+    longDesc:
+      'Transformación de un portafolio técnico en el sitio corporativo de Orbidev. El proyecto utiliza React, Vite y Tailwind CSS, incorpora una identidad visual personalizada y presenta servicios, proyectos y canales de contacto dentro de una experiencia moderna y adaptable a distintos dispositivos.',
+    icon: 'fa-window-maximize',
+    color: 'text-cyber-cyan',
+    github: 'https://github.com/FerSierra87/portafolio-os',
+  },
+  {
+    id: 2,
+    title: 'Automatización de datos',
+    tag: 'Python + SQL',
+    desc: 'Herramienta para limpiar, organizar y migrar información desde archivos CSV y Excel hacia bases de datos.',
+    longDesc:
+      'Solución orientada a reducir tareas manuales relacionadas con archivos y planillas. Permite normalizar columnas, detectar datos duplicados, eliminar registros vacíos y preparar información para su almacenamiento en PostgreSQL o MySQL.',
+    icon: 'fa-database',
+    color: 'text-cyber-emerald',
+    github: 'https://github.com/FerSierra87/sql-python-data-migration',
+  },
+  {
+    id: 3,
+    title: 'Clasificación de incidencias',
+    tag: 'Soporte + Automatización',
+    desc: 'Sistema para clasificar solicitudes técnicas, asignar prioridades y facilitar su resolución o escalamiento.',
+    longDesc:
+      'Proyecto inspirado en procesos reales de soporte técnico. Analiza la información de una incidencia, la categoriza según su contenido y permite organizar su prioridad. El objetivo es ayudar a reducir tiempos de clasificación y mejorar el seguimiento de solicitudes.',
+    icon: 'fa-list-check',
+    color: 'text-cyber-purple',
+    github: 'https://github.com/FerSierra87/panel-control-l1',
+  },
+  {
+  id: 4,
+  title: 'Helpdesk Core',
+  tag: 'Java + Spring Boot + React + Supabase + Render',
+  desc: 'Sistema web para gestionar clientes, equipos e incidencias mediante una arquitectura full-stack.',
+  longDesc:
+    'Aplicación full-stack con API REST desarrollada en Java y Spring Boot, frontend en React y base de datos PostgreSQL gestionada con Supabase. El backend se encuentra desplegado en Render y el frontend consume la API para gestionar clientes, equipos y tickets. Incluye operaciones CRUD y comunicación entre frontend, backend y base de datos.',
+  icon: 'fa-server',
+  color: 'text-cyber-blue',
+  github: 'https://github.com/FerSierra87/helpdesk-core',
+  githubFrontend:
+    'https://github.com/FerSierra87/helpdesk-core-frontend',
+  demo: 'https://helpdesk-core-one.web.app',
+},
+];
 
   // Envía el formulario simulado de incidentes informáticos
   const submitTicket = (e) => {
@@ -575,11 +580,24 @@ export default function App() {
           {activeTab === 'proyectos' && (
             <div className="p-4 sm:p-6 md:p-10 space-y-8 md:space-y-10 max-w-5xl">
               <div className="space-y-2">
-                <h1 className="text-3xl sm:text-4xl font-bold">Consola de Proyectos</h1>
-                <p className="text-xs sm:text-sm text-slate-400">Exploración interactiva de las soluciones de datos y desarrollo que he implementado.</p>
-              </div>
+                <div className="space-y-3">
+            <span className="text-xs font-mono tracking-[0.2em] text-cyber-cyan">
+            // PROYECTOS Y DESARROLLOS
+           </span>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
+    Soluciones construidas con tecnología real
+          </h1>
+
+          <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-3xl">
+    Estos proyectos muestran algunas de las tecnologías y capacidades que
+    podemos aplicar para desarrollar soluciones web, automatizaciones y
+    sistemas de gestión.
+           </p>
+        </div>
+      </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4 sm:gap-6">
                 {projectsData.map((project) => (
                   <div 
                     key={project.id}
@@ -601,28 +619,54 @@ export default function App() {
                 ))}
               </div>
 
-              {/* PANEL DE TECNOLOGÍAS */}
-              <div className="bg-cyber-dark/20 border border-cyber-border rounded-xl p-5 sm:p-8">
-                <h3 className="text-xs font-mono tracking-widest text-slate-400 mb-4 sm:text-center">TECNOLOGÍAS INCORPORADAS EN MI CORE</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 text-center">
-                  <div className="p-3 sm:p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center">
-                    <i className="fa-brands fa-react text-2xl sm:text-3xl text-cyber-cyan mb-2"></i>
-                    <p className="text-[10px] sm:text-xs font-mono font-bold">React JS</p>
-                  </div>
-                  <div className="p-3 sm:p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center">
-                    <i className="fa-solid fa-fire text-2xl sm:text-3xl text-amber-500 mb-2"></i>
-                    <p className="text-[10px] sm:text-xs font-mono font-bold">Firebase</p>
-                  </div>
-                  <div className="p-3 sm:p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center">
-                    <i className="fa-solid fa-database text-2xl sm:text-3xl text-cyber-emerald mb-2"></i>
-                    <p className="text-[10px] sm:text-xs font-mono font-bold">SQL (My/Postgre)</p>
-                  </div>
-                  <div className="p-3 sm:p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center">
-                    <i className="fa-brands fa-python text-2xl sm:text-3xl text-amber-300 mb-2"></i>
-                    <p className="text-[10px] sm:text-xs font-mono font-bold">Python</p>
-                  </div>
-                </div>
-              </div>
+     {/* PANEL DE TECNOLOGÍAS */}
+<div className="bg-cyber-dark/20 border border-cyber-border rounded-xl p-5 sm:p-8">
+  <h3 className="text-xs font-mono tracking-widest text-slate-400 mb-6 sm:text-center">
+    TECNOLOGÍAS UTILIZADAS EN NUESTROS DESARROLLOS
+  </h3>
+
+  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 text-center">
+    <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-cyber-cyan/50 transition-all">
+      <i className="fa-brands fa-react text-3xl text-cyber-cyan mb-3"></i>
+      <p className="text-xs font-mono font-bold">React</p>
+    </div>
+
+    <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-orange-400/50 transition-all">
+      <i className="fa-brands fa-java text-3xl text-orange-400 mb-3"></i>
+      <p className="text-xs font-mono font-bold">Java</p>
+    </div>
+
+    <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-cyber-emerald/50 transition-all">
+      <i className="fa-solid fa-leaf text-3xl text-cyber-emerald mb-3"></i>
+      <p className="text-xs font-mono font-bold">Spring Boot</p>
+    </div>
+
+    <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-cyber-emerald/50 transition-all">
+      <i className="fa-solid fa-bolt text-3xl text-cyber-emerald mb-3"></i>
+      <p className="text-xs font-mono font-bold">Supabase</p>
+    </div>
+
+    <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-cyber-purple/50 transition-all">
+      <i className="fa-solid fa-cloud-arrow-up text-3xl text-cyber-purple mb-3"></i>
+      <p className="text-xs font-mono font-bold">Render</p>
+    </div>
+
+    <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-cyber-blue/50 transition-all">
+      <i className="fa-solid fa-database text-3xl text-cyber-blue mb-3"></i>
+      <p className="text-xs font-mono font-bold">PostgreSQL</p>
+    </div>
+
+    <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-amber-400/50 transition-all">
+      <i className="fa-solid fa-fire text-3xl text-amber-400 mb-3"></i>
+      <p className="text-xs font-mono font-bold">Firebase</p>
+    </div>
+
+    <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-yellow-300/50 transition-all">
+      <i className="fa-brands fa-python text-3xl text-yellow-300 mb-3"></i>
+      <p className="text-xs font-mono font-bold">Python</p>
+    </div>
+  </div>
+</div>
             </div>
           )}
 
