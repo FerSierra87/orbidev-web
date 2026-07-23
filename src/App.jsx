@@ -273,15 +273,15 @@ ${ticket.desc || 'Quiero recibir más información.'}
         {/* MENU LATERAL RESPONSIVE CON MÁXIMA COMPATIBILIDAD DE ALTURAS */}
         <div className={`
           fixed md:relative top-0 bottom-0 left-0 z-30 md:z-10
-          w-72 md:w-80 bg-cyber-dark/95 md:bg-cyber-dark/60 
+          w-[85vw] max-w-72 md:w-80 md:max-w-none bg-cyber-dark/95 md:bg-cyber-dark/60 
           border-r border-cyber-border flex flex-col p-4 justify-between select-none shrink-0 
           h-full overflow-y-auto transition-transform duration-300 ease-in-out
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}>
           
           {/* LISTA DE NAVEGACIÓN COMPACTA */}
-          <div className="space-y-2">
-            <span className="text-[10px] font-mono tracking-widest text-slate-500 block px-3 mb-1"> NAVEGACIÓN ORBIDEV</span>
+          <div className="space-y-2 pt-3">
+            <span className="text-[10px] font-mono tracking-widest text-slate-500 block px-3 mb-2"> NAVEGACIÓN ORBIDEV</span>
             <button
   onClick={() => navigateTo('inicio')}
   className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${
