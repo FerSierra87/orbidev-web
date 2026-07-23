@@ -227,39 +227,54 @@ export default function App() {
           
           {/* LISTA DE NAVEGACIÓN COMPACTA */}
           <div className="space-y-2">
-            <span className="text-[10px] font-mono tracking-widest text-slate-500 block px-3 mb-1">MENÚ PRINCIPAL</span>
-            
-            <button 
-              onClick={() => navigateTo('inicio')}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${activeTab === 'inicio' ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan' : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'}`}
-            >
-              <i className="fa-solid fa-terminal text-xs"></i>
-              <span>01_INICIO</span>
-            </button>
+            <span className="text-[10px] font-mono tracking-widest text-slate-500 block px-3 mb-1"> NAVEGACIÓN ORBIDEV</span>
+            <button
+  onClick={() => navigateTo('inicio')}
+  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${
+    activeTab === 'inicio'
+      ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan'
+      : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'
+  }`}
+>
+  <i className="fa-solid fa-house text-xs"></i>
+  <span>01_INICIO</span>
+</button>
 
-            <button 
-              onClick={() => navigateTo('proyectos')}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${activeTab === 'proyectos' ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan' : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'}`}
-            >
-              <i className="fa-solid fa-code-branch text-xs"></i>
-              <span>02_PROYECTOS</span>
-            </button>
+<button
+  onClick={() => navigateTo('terminal')}
+  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${
+    activeTab === 'terminal'
+      ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan'
+      : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'
+  }`}
+>
+  <i className="fa-solid fa-layer-group text-xs"></i>
+  <span>02_SERVICIOS</span>
+</button>
 
-            <button 
-              onClick={() => navigateTo('terminal')}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${activeTab === 'terminal' ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan' : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'}`}
-            >
-              <i className="fa-solid fa-keyboard text-xs"></i>
-              <span>03_CONSOLA</span>
-            </button>
+<button
+  onClick={() => navigateTo('proyectos')}
+  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${
+    activeTab === 'proyectos'
+      ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan'
+      : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'
+  }`}
+>
+  <i className="fa-solid fa-briefcase text-xs"></i>
+  <span>03_PROYECTOS</span>
+</button>
 
-            <button 
-              onClick={() => navigateTo('soporte')}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${activeTab === 'soporte' ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan' : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'}`}
-            >
-              <i className="fa-solid fa-headset text-xs"></i>
-              <span>04_SOPORTE_L1</span>
-            </button>
+<button
+  onClick={() => navigateTo('soporte')}
+  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${
+    activeTab === 'soporte'
+      ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan'
+      : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'
+  }`}
+>
+  <i className="fa-solid fa-envelope text-xs"></i>
+  <span>04_CONTACTO</span>
+</button>
           </div>
 
           {/* RASTREO DE SCROLL Y MASCOTA GIGANTE CON ALTURA INTELIGENTE */}
@@ -471,42 +486,138 @@ export default function App() {
             </div>
           )}
 
-          {/* PESTAÑA: TERMINAL INTERACTIVA */}
-          {activeTab === 'terminal' && (
-            <div className="p-4 sm:p-6 md:p-8 h-full flex flex-col justify-between font-mono text-xs sm:text-sm">
-              <div className="space-y-2 overflow-y-auto pr-2 flex-1 max-h-[80%]">
-                {terminalHistory.map((item, index) => (
-                  <div 
-                    key={index}
-                    className={`whitespace-pre-wrap leading-relaxed ${
-                      item.type === 'input' ? 'text-slate-200 font-bold' :
-                      item.type === 'error' ? 'text-red-400' :
-                      item.type === 'success' ? 'text-cyber-emerald' : 'text-cyber-cyan/90'
-                    }`}
-                  >
-                    {item.text}
-                  </div>
-                ))}
-                <div ref={terminalEndRef}></div>
-              </div>
+          {/* PESTAÑA: SERVICIOS */}
+{activeTab === 'terminal' && (
+  <div className="p-4 sm:p-6 md:p-10 space-y-8 md:space-y-10 max-w-6xl">
+    <div className="space-y-3">
+      <span className="text-xs font-mono tracking-[0.2em] text-cyber-cyan">
+        // NUESTROS SERVICIOS
+      </span>
 
-              <form onSubmit={handleTerminalSubmit} className="flex items-center gap-2 sm:gap-3 border-t border-cyber-border pt-4 bg-cyber-dark/20 p-2 sm:p-3 rounded-lg shrink-0 mt-4">
-                <span className="text-cyber-emerald font-bold">$</span>
-                <input 
-                  type="text" 
-                  value={terminalInput}
-                  onChange={(e) => setTerminalInput(e.target.value)}
-                  placeholder="Escribí 'help'..."
-                  className="flex-1 bg-transparent border-none outline-none focus:ring-0 text-slate-100 placeholder-slate-600 font-mono text-xs sm:text-sm"
-                  autoFocus
-                />
-                <button type="submit" className="bg-cyber-purple/40 border border-cyber-purple/60 hover:bg-cyber-purple px-4 py-1.5 sm:py-2 rounded text-xs text-white cursor-pointer font-bold transition-all">
-                  RUN
-                </button>
-              </form>
-            </div>
-          )}
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
+        Tecnología para hacer crecer tu empresa
+      </h1>
 
+      <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-3xl">
+        Diseñamos soluciones digitales adaptadas a cada negocio, desde una
+        presencia profesional en internet hasta sistemas que organizan y
+        automatizan procesos internos.
+      </p>
+    </div>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+      <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-cyan/60 rounded-xl p-6 transition-all group">
+        <div className="w-11 h-11 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center text-cyber-cyan mb-5">
+          <i className="fa-solid fa-laptop-code text-xl"></i>
+        </div>
+
+        <h2 className="text-lg font-bold mb-2 group-hover:text-cyber-cyan transition-colors">
+          Diseño web
+        </h2>
+
+        <p className="text-sm text-slate-400 leading-relaxed">
+          Sitios modernos, rápidos, adaptables a celulares y alineados con la
+          identidad de tu empresa.
+        </p>
+      </article>
+
+      <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-purple/60 rounded-xl p-6 transition-all group">
+        <div className="w-11 h-11 rounded-lg bg-cyber-purple/10 border border-cyber-purple/20 flex items-center justify-center text-cyber-purple mb-5">
+          <i className="fa-solid fa-cart-shopping text-xl"></i>
+        </div>
+
+        <h2 className="text-lg font-bold mb-2 group-hover:text-cyber-purple transition-colors">
+          E-commerce
+        </h2>
+
+        <p className="text-sm text-slate-400 leading-relaxed">
+          Tiendas online claras, seguras y fáciles de administrar para vender
+          productos o servicios.
+        </p>
+      </article>
+
+      <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-blue/60 rounded-xl p-6 transition-all group">
+        <div className="w-11 h-11 rounded-lg bg-cyber-blue/10 border border-cyber-blue/20 flex items-center justify-center text-cyber-blue mb-5">
+          <i className="fa-solid fa-gears text-xl"></i>
+        </div>
+
+        <h2 className="text-lg font-bold mb-2 group-hover:text-cyber-blue transition-colors">
+          Sistemas a medida
+        </h2>
+
+        <p className="text-sm text-slate-400 leading-relaxed">
+          Aplicaciones personalizadas para gestionar clientes, ventas,
+          inventario, agenda, tareas y otros procesos.
+        </p>
+      </article>
+
+      <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-emerald/60 rounded-xl p-6 transition-all group">
+        <div className="w-11 h-11 rounded-lg bg-cyber-emerald/10 border border-cyber-emerald/20 flex items-center justify-center text-cyber-emerald mb-5">
+          <i className="fa-solid fa-bolt text-xl"></i>
+        </div>
+
+        <h2 className="text-lg font-bold mb-2 group-hover:text-cyber-emerald transition-colors">
+          Automatización
+        </h2>
+
+        <p className="text-sm text-slate-400 leading-relaxed">
+          Transformamos tareas manuales, formularios y planillas en procesos
+          digitales más rápidos y confiables.
+        </p>
+      </article>
+
+      <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-cyan/60 rounded-xl p-6 transition-all group">
+        <div className="w-11 h-11 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center text-cyber-cyan mb-5">
+          <i className="fa-solid fa-database text-xl"></i>
+        </div>
+
+        <h2 className="text-lg font-bold mb-2 group-hover:text-cyber-cyan transition-colors">
+          Datos e integraciones
+        </h2>
+
+        <p className="text-sm text-slate-400 leading-relaxed">
+          Organizamos información y conectamos bases de datos, Excel, APIs y
+          servicios externos.
+        </p>
+      </article>
+
+      <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-purple/60 rounded-xl p-6 transition-all group">
+        <div className="w-11 h-11 rounded-lg bg-cyber-purple/10 border border-cyber-purple/20 flex items-center justify-center text-cyber-purple mb-5">
+          <i className="fa-solid fa-headset text-xl"></i>
+        </div>
+
+        <h2 className="text-lg font-bold mb-2 group-hover:text-cyber-purple transition-colors">
+          Soporte y mantenimiento
+        </h2>
+
+        <p className="text-sm text-slate-400 leading-relaxed">
+          Acompañamiento técnico, mejoras y mantenimiento para que tu solución
+          siga funcionando correctamente.
+        </p>
+      </article>
+    </div>
+
+    <div className="bg-linear-to-r from-cyber-purple/10 via-cyber-blue/10 to-cyber-cyan/10 border border-cyber-border rounded-xl p-5 sm:p-7 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+      <div>
+        <h2 className="text-xl font-bold mb-2">
+          ¿No sabés qué solución necesitás?
+        </h2>
+
+        <p className="text-sm text-slate-400">
+          Contanos el problema y evaluamos juntos una opción simple y realista.
+        </p>
+      </div>
+
+      <button
+        onClick={() => navigateTo('soporte')}
+        className="bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0"
+      >
+        <i className="fa-regular fa-comment-dots"></i>
+        Iniciar una consulta
+      </button>
+    </div>
+  </div>
+)}
           {/* PESTAÑA: SOPORTE L1 */}
           {activeTab === 'soporte' && (
             <div className="p-4 sm:p-6 md:p-10 space-y-8 md:space-y-10 max-w-3xl">
