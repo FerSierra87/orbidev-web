@@ -101,14 +101,25 @@ export default function App() {
   };
 
   // Mensajes adaptativos de la mascota según la posición del scroll de lectura
-  const getMascotMessage = () => {
-    if (scrollPercent === 0) return "¡Hola! Soy Mascot_v1.0. ¡Desplázate hacia abajo en el panel principal para ver mi magia!";
-    if (scrollPercent < 25) return "¡Arrancando! Analizando la sección de inicio...";
-    if (scrollPercent < 50) return "Interesante perfil... la formación en UTEC sumada al soporte real en el Ministerio es un gran mix para dar soluciones.";
-    if (scrollPercent < 75) return "¡Aquí están mis proyectos! Todo diseñado de forma limpia y estructurada.";
-    if (scrollPercent < 99) return "¡Casi al final de la página! Podés enviarme un ticket de soporte si tenés dudas.";
-    return "¡Completado al 100%! ¿Hablamos de tu próximo sistema?";
-  };
+const getMascotMessage = () => {
+  if (scrollPercent < 25) {
+    return 'Primero entendemos qué necesita realmente tu empresa.';
+  }
+
+  if (scrollPercent < 50) {
+    return 'Podemos comenzar con una solución pequeña y ampliarla cuando sea necesario.';
+  }
+
+  if (scrollPercent < 75) {
+    return 'Diseñamos sitios, sistemas y automatizaciones para simplificar procesos.';
+  }
+
+  if (scrollPercent < 99) {
+    return 'Ya conocés cómo trabajamos. El siguiente paso es contarnos tu necesidad.';
+  }
+
+  return '¡Recorrido completado! ¿Hablamos de tu próximo proyecto?';
+};
 
   // Proyectos reales, con sus repositorios y demos en vivo
   const projectsData = [
@@ -282,44 +293,7 @@ export default function App() {
 </button>
           </div>
 
-          {/* RASTREO DE SCROLL Y MASCOTA GIGANTE CON ALTURA INTELIGENTE */}
-          <div className="border-t border-cyber-border pt-4 flex flex-col gap-3 relative mt-4">
-            <span className="text-[10px] font-mono tracking-widest text-slate-500 block px-3">MASCOT_TRACKER.SYS</span>
-            
-            {/* Bocadillo de diálogo de la mascota */}
-            <div className="bg-cyber-panel/95 border border-cyber-purple/40 rounded-xl p-3 text-xs leading-relaxed text-cyber-cyan font-mono relative shadow-lg">
-              <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-cyber-panel border-r border-b border-cyber-purple/40 rotate-45"></div>
-              {getMascotMessage()}
-            </div>
-
-            {/* Riel visual del deslizador (Altura compacta h-40 para que quepa en celulares cortos) */}
-            <div className="h-40 bg-cyber-dark/80 rounded-xl border border-cyber-border relative overflow-hidden flex items-center justify-center shadow-inner shrink-0">
-              <div className="absolute left-1/2 top-4 bottom-4 w-0.5 bg-linear-to-b from-cyber-purple via-cyber-cyan to-cyber-emerald transform -translate-x-1/2"></div>
-              
-              <div className="absolute right-4 text-[9px] font-mono text-slate-600 flex flex-col justify-between h-full py-4">
-                <span>0%</span>
-                <span>50%</span>
-                <span>100%</span>
-              </div>
-
-              {/* Contenedor del avatar gigante deslizable con fórmula matemática precisa para evitar recortes */}
-              <div 
-                style={{ 
-                  position: 'absolute',
-                  left: '50%',
-                  top: `calc(${scrollPercent}% * (100% - 56px) / 100)`,
-                  transform: 'translateX(-50%)'
-                }}
-                className="transition-all duration-300 ease-out flex flex-col items-center z-10"
-              >
-                {/* Círculo del avatar neón violeta */}
-                <div className="bg-slate-900 border-2 border-cyber-cyan rounded-full p-2 shadow-lg flex items-center justify-center text-cyber-cyan w-12 h-12 glow-active">
-                  <i className={`fa-solid ${scrollPercent > 80 ? 'fa-face-laugh-beam' : scrollPercent > 40 ? 'fa-robot' : 'fa-laptop-code'} text-xl`}></i>
-                </div>
-                <span className="text-[9px] font-mono text-cyber-cyan mt-1 px-1 bg-cyber-panel border border-cyber-border rounded shadow font-bold">{scrollPercent}%</span>
-              </div>
-            </div>
-          </div>
+          
         </div>
 
         {/* PANEL PRINCIPAL DE CONTENIDO DESLIZABLE (100% ANCHO EN MÓVIL) */}
@@ -331,7 +305,7 @@ export default function App() {
           
           {/* PESTAÑA: INICIO */}
           {activeTab === 'inicio' && (
-            <div className="p-4 sm:p-6 md:p-10 space-y-10 md:space-y-16 max-w-5xl">
+            <div className="p-4 sm:p-6 md:p-10 xl:pr-76 space-y-10 md:space-y-16 max-w-7xl">
               
              {/* PRESENTACIÓN */}
           <div className="space-y-4 md:space-y-6">
@@ -1015,7 +989,72 @@ export default function App() {
 )}
 
         </div>
+        
+
+        {/* ASISTENTE FLOTANTE ORBIT */}
+        {activeTab === 'inicio' && scrollPercent > 8 && (
+          <aside className="hidden xl:flex fixed right-6 top-24 z-30 w-64 flex-col items-center">
+            <div className="relative w-full bg-cyber-dark/95 border border-cyber-purple/40 rounded-2xl p-4 shadow-2xl shadow-cyber-purple/10 backdrop-blur-md">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-11 h-11 rounded-full bg-cyber-purple/10 border-2 border-cyber-cyan flex items-center justify-center text-cyber-cyan shadow-lg shadow-cyber-cyan/10">
+                  <i
+                    className={`fa-solid ${
+                      scrollPercent > 85
+                        ? 'fa-face-laugh-beam'
+                        : scrollPercent > 45
+                          ? 'fa-robot'
+                          : 'fa-laptop-code'
+                    } text-lg`}
+                  ></i>
+                </div>
+
+                <div>
+                  <h2 className="font-display text-sm tracking-wider text-white">
+                    ORBIT
+                  </h2>
+
+                  <span className="font-mono text-[9px] tracking-widest text-cyber-emerald">
+                    ASSISTANT ONLINE
+                  </span>
+                </div>
+              </div>
+
+              <p className="text-xs font-mono text-slate-300 leading-relaxed">
+                {getMascotMessage()}
+              </p>
+
+              <div className="mt-4">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[9px] font-mono text-slate-500">
+                    RECORRIDO
+                  </span>
+
+                  <span className="text-[9px] font-mono text-cyber-cyan">
+                    {scrollPercent}%
+                  </span>
+                </div>
+
+                <div className="h-1.5 bg-cyber-panel rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-linear-to-r from-cyber-purple via-cyber-blue to-cyber-cyan transition-all duration-300"
+                    style={{ width: `${scrollPercent}%` }}
+                  ></div>
+                </div>
+              </div>
+
+              <button
+                onClick={() => navigateTo('soporte')}
+                className="w-full mt-4 border border-cyber-cyan/30 hover:border-cyber-cyan text-slate-300 hover:text-cyber-cyan font-mono text-[10px] py-2 rounded-lg transition-all cursor-pointer"
+              >
+                HABLAR CON ORBIDEV
+              </button>
+            </div>
+          </aside>
+        )}
+
       </div>
+        
+      
 
       {/* MODAL PARA DETALLE DEL PROYECTO SELECCIONADO (RESPONSIVE SEGURO) */}
       {selectedProject && (
