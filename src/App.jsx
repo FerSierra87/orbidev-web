@@ -618,80 +618,217 @@ export default function App() {
     </div>
   </div>
 )}
-          {/* PESTAÑA: SOPORTE L1 */}
-          {activeTab === 'soporte' && (
-            <div className="p-4 sm:p-6 md:p-10 space-y-8 md:space-y-10 max-w-3xl">
-              <div className="space-y-2">
-                <h1 className="text-3xl sm:text-4xl font-bold">Soporte Técnico L1</h1>
-                <p className="text-xs sm:text-sm text-slate-400">Si tenés una incidencia informática, requerís estructurar una web o necesitás automatizar tus datos, creá un ticket prioritario.</p>
-              </div>
+  {/* PESTAÑA: CONTACTO */}
+{activeTab === 'soporte' && (
+  <div className="p-4 sm:p-6 md:p-10 space-y-8 md:space-y-10 max-w-5xl">
+    <div className="space-y-3">
+      <span className="text-xs font-mono tracking-[0.2em] text-cyber-cyan">
+        // CONTACTO
+      </span>
 
-              {isTicketSubmitted ? (
-                <div className="bg-cyber-emerald/10 border border-cyber-emerald/30 p-6 sm:p-8 rounded-xl space-y-4 text-center">
-                  <i className="fa-solid fa-circle-check text-4xl sm:text-5xl text-cyber-emerald animate-bounce"></i>
-                  <h3 className="text-lg sm:text-xl font-bold text-cyber-emerald font-mono">¡TICKET REGISTRADO!</h3>
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">Me pondré en contacto contigo para darte una solución en un plazo menor a 24 horas.</p>
-                  <div className="text-[10px] text-slate-500 font-mono">STATUS: PENDING_CONTACT</div>
-                </div>
-              ) : (
-                <form onSubmit={submitTicket} className="space-y-4 sm:space-y-5 bg-cyber-dark/40 border border-cyber-border p-5 sm:p-8 rounded-xl">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-1">
-                      <label className="text-[10px] sm:text-xs font-mono text-slate-400">Nombre / Empresa</label>
-                      <input 
-                        type="text" 
-                        required
-                        value={ticket.name}
-                        onChange={(e) => setTicket({...ticket, name: e.target.value})}
-                        placeholder="Ej: PYME Uruguay" 
-                        className="w-full bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-cyber-purple"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-[10px] sm:text-xs font-mono text-slate-400">Email de Contacto</label>
-                      <input 
-                        type="email" 
-                        required
-                        value={ticket.email}
-                        onChange={(e) => setTicket({...ticket, email: e.target.value})}
-                        placeholder="ejemplo@correo.com" 
-                        className="w-full bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-cyber-purple"
-                      />
-                    </div>
-                  </div>
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
+        Hablemos de tu proyecto
+      </h1>
 
-                  <div className="space-y-1">
-                    <label className="text-[10px] sm:text-xs font-mono text-slate-400">¿Qué necesitás?</label>
-                    <select 
-                      value={ticket.tipo}
-                      onChange={(e) => setTicket({...ticket, tipo: e.target.value})}
-                      className="w-full bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-cyber-purple"
-                    >
-                      <option value="landing">Tier 1 — Landing Page / Sitio Corporativo</option>
-                      <option value="datos">Tier 2 — Estructuración de Bases de Datos SQL</option>
-                      <option value="sistema">Tier 3 — Sistema Integral / Consultoría</option>
-                    </select>
-                  </div>
+      <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-3xl">
+        Contanos qué necesitás mejorar, crear o automatizar. Analizamos tu idea
+        y te proponemos una solución clara, escalable y adaptada a tu negocio.
+      </p>
+    </div>
 
-                  <div className="space-y-1">
-                    <label className="text-[10px] sm:text-xs font-mono text-slate-400">Descripción del Requisito</label>
-                    <textarea 
-                      rows="3"
-                      required
-                      value={ticket.desc}
-                      onChange={(e) => setTicket({...ticket, desc: e.target.value})}
-                      placeholder="Contame qué necesitas resolver..." 
-                      className="w-full bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-cyber-purple"
-                    ></textarea>
-                  </div>
+    <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-6">
+      <div className="space-y-4">
+        <div className="bg-cyber-dark/40 border border-cyber-border rounded-xl p-5">
+          <div className="w-10 h-10 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center text-cyber-cyan mb-4">
+            <i className="fa-regular fa-clock"></i>
+          </div>
 
-                  <button type="submit" className="w-full bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono py-2.5 sm:py-3 rounded-lg text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-cyber-purple/20 font-bold">
-                    <i className="fa-solid fa-ticket"></i> REGISTRAR TICKET
-                  </button>
-                </form>
-              )}
+          <h2 className="font-bold mb-2">
+            Respuesta inicial
+          </h2>
+
+          <p className="text-sm text-slate-400 leading-relaxed">
+            Revisamos cada consulta y respondemos normalmente dentro de las
+            primeras 24 horas hábiles.
+          </p>
+        </div>
+
+        <div className="bg-cyber-dark/40 border border-cyber-border rounded-xl p-5">
+          <div className="w-10 h-10 rounded-lg bg-cyber-purple/10 border border-cyber-purple/20 flex items-center justify-center text-cyber-purple mb-4">
+            <i className="fa-solid fa-location-dot"></i>
+          </div>
+
+          <h2 className="font-bold mb-2">
+            Atención desde Uruguay
+          </h2>
+
+          <p className="text-sm text-slate-400 leading-relaxed">
+            Trabajamos de forma remota con empresas, comercios y emprendimientos.
+          </p>
+        </div>
+
+        <div className="bg-cyber-dark/40 border border-cyber-border rounded-xl p-5">
+          <div className="w-10 h-10 rounded-lg bg-cyber-emerald/10 border border-cyber-emerald/20 flex items-center justify-center text-cyber-emerald mb-4">
+            <i className="fa-solid fa-comments"></i>
+          </div>
+
+          <h2 className="font-bold mb-2">
+            Comunicación clara
+          </h2>
+
+          <p className="text-sm text-slate-400 leading-relaxed">
+            Explicamos cada propuesta sin tecnicismos innecesarios y con pasos
+            concretos.
+          </p>
+        </div>
+      </div>
+
+      {isTicketSubmitted ? (
+        <div className="bg-cyber-emerald/10 border border-cyber-emerald/30 p-6 sm:p-8 rounded-xl space-y-4 text-center flex flex-col justify-center min-h-96">
+          <i className="fa-solid fa-circle-check text-5xl text-cyber-emerald"></i>
+
+          <h2 className="text-xl sm:text-2xl font-bold text-cyber-emerald">
+            Consulta registrada
+          </h2>
+
+          <p className="text-sm text-slate-300 leading-relaxed max-w-md mx-auto">
+            Gracias por contactar a Orbidev. Revisaremos la información y nos
+            pondremos en contacto contigo.
+          </p>
+
+          <div className="text-[10px] text-slate-500 font-mono">
+            STATUS: CONSULTA_RECIBIDA
+          </div>
+        </div>
+      ) : (
+        <form
+          onSubmit={submitTicket}
+          className="space-y-5 bg-cyber-dark/40 border border-cyber-border p-5 sm:p-8 rounded-xl"
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <label
+                htmlFor="contact-name"
+                className="text-xs font-mono text-slate-400"
+              >
+                Nombre o empresa
+              </label>
+
+              <input
+                id="contact-name"
+                type="text"
+                required
+                value={ticket.name}
+                onChange={(e) =>
+                  setTicket({ ...ticket, name: e.target.value })
+                }
+                placeholder="Ej: Comercio del Centro"
+                className="w-full bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyber-cyan"
+              />
             </div>
-          )}
+
+            <div className="space-y-1.5">
+              <label
+                htmlFor="contact-email"
+                className="text-xs font-mono text-slate-400"
+              >
+                Correo electrónico
+              </label>
+
+              <input
+                id="contact-email"
+                type="email"
+                required
+                value={ticket.email}
+                onChange={(e) =>
+                  setTicket({ ...ticket, email: e.target.value })
+                }
+                placeholder="nombre@empresa.com"
+                className="w-full bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyber-cyan"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label
+              htmlFor="contact-service"
+              className="text-xs font-mono text-slate-400"
+            >
+              Servicio de interés
+            </label>
+
+            <select
+              id="contact-service"
+              value={ticket.tipo}
+              onChange={(e) =>
+                setTicket({ ...ticket, tipo: e.target.value })
+              }
+              className="w-full bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyber-cyan"
+            >
+              <option value="landing">
+                Sitio web o landing page
+              </option>
+
+              <option value="ecommerce">
+                Tienda online
+              </option>
+
+              <option value="sistema">
+                Sistema a medida
+              </option>
+
+              <option value="automatizacion">
+                Automatización de procesos
+              </option>
+
+              <option value="datos">
+                Datos e integraciones
+              </option>
+
+              <option value="otro">
+                Otra consulta
+              </option>
+            </select>
+          </div>
+
+          <div className="space-y-1.5">
+            <label
+              htmlFor="contact-description"
+              className="text-xs font-mono text-slate-400"
+            >
+              ¿Qué necesitás resolver?
+            </label>
+
+            <textarea
+              id="contact-description"
+              rows="5"
+              required
+              value={ticket.desc}
+              onChange={(e) =>
+                setTicket({ ...ticket, desc: e.target.value })
+              }
+              placeholder="Contanos brevemente tu necesidad, problema o idea..."
+              className="w-full resize-none bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyber-cyan"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono py-3 rounded-lg text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-cyber-purple/20 font-bold"
+          >
+            <i className="fa-regular fa-paper-plane"></i>
+            ENVIAR CONSULTA
+          </button>
+
+          <p className="text-[10px] text-slate-500 text-center font-mono">
+            Esta versión todavía simula el envío. Luego conectaremos el
+            formulario con un servicio real.
+          </p>
+        </form>
+      )}
+    </div>
+  </div>
+)}
 
         </div>
       </div>
