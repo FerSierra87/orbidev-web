@@ -163,6 +163,7 @@ const getMascotMessage = () => {
     icon: 'fa-list-check',
     color: 'text-cyber-purple',
     github: 'https://github.com/FerSierra87/panel-control-l1',
+    demo: 'https://panel-control-l1-orbidev.web.app',
   },
   {
   id: 4,
