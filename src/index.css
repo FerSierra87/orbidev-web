@@ -1,53 +1,141 @@
-/* STREAMING_CHUNK: Importing Tailwind v4 CSS... */
 @import "tailwindcss";
 
-/* STREAMING_CHUNK: Defining Custom Theme Tokens... */
+/* =====================================================
+   ORBIDEV — SISTEMA VISUAL
+   ===================================================== */
+
 @theme {
---font-sans: 'Outfit', sans-serif;
---font-mono: 'Fira Code', monospace;
+  /* Tipografías */
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Orbitron", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 
---color-cyber-dark: #030712;
---color-cyber-panel: #0b0f19;
---color-cyber-border: #1e293b;
---color-cyber-purple: #7c3aed;
---color-cyber-blue: #3b82f6;
---color-cyber-cyan: #38bdf8;
---color-cyber-emerald: #10b981;
+  /* Colores principales */
+  --color-cyber-dark: #06111f;
+  --color-cyber-panel: #0d1b2a;
+  --color-cyber-border: #1a2f4a;
+
+  --color-cyber-purple: #7b5cff;
+  --color-cyber-blue: #2d7bff;
+  --color-cyber-cyan: #00e7f0;
+  --color-cyber-emerald: #00d6a8;
+
+  /* Colores auxiliares */
+  --color-orbidev-white: #f5f7fa;
+  --color-orbidev-gray: #98a6b8;
 }
 
-/* STREAMING_CHUNK: Setting Global Layout Elements... */
+/* =====================================================
+   ESTILOS GENERALES
+   ===================================================== */
+
+html {
+  background-color: var(--color-cyber-dark);
+  scroll-behavior: smooth;
+}
+
 body {
-margin: 0;
-background-color: var(--color-cyber-dark);
-color: #f1f5f9;
-overflow: hidden;
+  margin: 0;
+  min-width: 320px;
+  background-color: var(--color-cyber-dark);
+  color: var(--color-orbidev-white);
+  font-family: var(--font-sans);
+  overflow: hidden;
 }
 
-/* Custom scrollbar styling to fit the OS aesthetic */
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/* =====================================================
+   SELECCIÓN DE TEXTO
+   ===================================================== */
+
+::selection {
+  background-color: rgba(123, 92, 255, 0.45);
+  color: #ffffff;
+}
+
+/* =====================================================
+   BARRA DE DESPLAZAMIENTO
+   ===================================================== */
+
 ::-webkit-scrollbar {
-width: 8px;
-height: 8px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-background: var(--color-cyber-panel);
-border-left: 1px solid var(--color-cyber-border);
+  background: var(--color-cyber-panel);
+  border-left: 1px solid var(--color-cyber-border);
 }
 
 ::-webkit-scrollbar-thumb {
-background: var(--color-cyber-border);
-border-radius: 4px;
+  background: var(--color-cyber-border);
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-background: var(--color-cyber-cyan);
+  background: var(--color-cyber-cyan);
 }
 
-/* Subtle glow animation for active elements */
-@keyframes neonGlow {
-0%, 100% { box-shadow: 0 0 15px rgba(124, 58, 237, 0.2); }
-50% { box-shadow: 0 0 25px rgba(124, 58, 237, 0.4); }
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color:
+    var(--color-cyber-border)
+    var(--color-cyber-panel);
 }
+
+/* =====================================================
+   EFECTOS DE IDENTIDAD ORBIDEV
+   ===================================================== */
+
+@keyframes neonGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 14px rgba(123, 92, 255, 0.18),
+      0 0 24px rgba(0, 231, 240, 0.05);
+  }
+
+  50% {
+    box-shadow:
+      0 0 22px rgba(123, 92, 255, 0.32),
+      0 0 35px rgba(0, 231, 240, 0.12);
+  }
+}
+
 .glow-active {
-animation: neonGlow 3s infinite;
+  animation: neonGlow 3s ease-in-out infinite;
+}
+
+.orbidev-gradient-text {
+  background: linear-gradient(
+    90deg,
+    var(--color-cyber-purple),
+    var(--color-cyber-blue),
+    var(--color-cyber-cyan)
+  );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.orbidev-panel {
+  background: rgba(13, 27, 42, 0.72);
+  border: 1px solid var(--color-cyber-border);
+  backdrop-filter: blur(12px);
+}
+
+.orbidev-grid-background {
+  background-image:
+    linear-gradient(rgba(0, 231, 240, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 231, 240, 0.035) 1px, transparent 1px);
+
+  background-size: 32px 32px;
 }
