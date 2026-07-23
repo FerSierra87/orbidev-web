@@ -382,52 +382,192 @@ export default function App() {
   </div>
 </div>
 
-              {/* SECCIÓN DE DATOS Y METRICAS */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                <div className="bg-cyber-dark/40 border border-cyber-border rounded-xl p-5 sm:p-6 relative overflow-hidden">
-                  <div className="absolute top-4 right-4 text-cyber-cyan/20 text-3xl sm:text-4xl font-mono"><i className="fa-solid fa-graduation-cap"></i></div>
-                  <span className="text-[10px] sm:text-xs font-mono text-slate-400 block mb-1">EDUCACIÓN UTEC</span>
-                  <h3 className="text-xl sm:text-2xl font-bold text-cyber-cyan mb-2">4° Semestre</h3>
-                  <p className="text-xs sm:text-sm text-slate-400">Licenciatura en Tecnologías de la Información. Próximo a titularse como Tecnólogo en TI.</p>
-                </div>
-                <div className="bg-cyber-dark/40 border border-cyber-border rounded-xl p-5 sm:p-6 relative overflow-hidden">
-                  <div className="absolute top-4 right-4 text-cyber-emerald/20 text-3xl sm:text-4xl font-mono"><i className="fa-solid fa-shield"></i></div>
-                  <span className="text-[10px] sm:text-xs font-mono text-slate-400 block mb-1">ENTORNO REAL L1</span>
-                  <h3 className="text-xl sm:text-2xl font-bold text-cyber-emerald mb-2">Ministerio del Int.</h3>
-                  <p className="text-xs sm:text-sm text-slate-400">Resolución rápida de incidentes, administración de accesos, redes y soporte técnico bajo presión.</p>
-                </div>
-                <div className="bg-cyber-dark/40 border border-cyber-border rounded-xl p-5 sm:p-6 relative overflow-hidden">
-                  <div className="absolute top-4 right-4 text-cyber-purple/20 text-3xl sm:text-4xl font-mono"><i className="fa-solid fa-server"></i></div>
-                  <span className="text-[10px] sm:text-xs font-mono text-slate-400 block mb-1">MERCADO CLOUD</span>
-                  <h3 className="text-xl sm:text-2xl font-bold text-cyber-purple mb-2">Soluciones TI</h3>
-                  <p className="text-xs sm:text-sm text-slate-400">Servicios empaquetados para PyMEs: bases de datos optimizadas, automatizaciones y portales rápidos.</p>
-                </div>
-              </div>
+              {/* PROPUESTA DE VALOR */}
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+  <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-cyan/50 rounded-xl p-5 sm:p-6 relative overflow-hidden transition-all group">
+    <div className="absolute top-4 right-4 text-cyber-cyan/15 text-4xl">
+      <i className="fa-solid fa-puzzle-piece"></i>
+    </div>
 
-              {/* FILOSOFÍA TÉCNICA */}
-              <div className="space-y-6">
-                <h2 className="text-xl sm:text-2xl font-bold border-b border-cyber-border pb-2 flex items-center gap-3">
-                  <span className="text-cyber-cyan font-mono">&gt;</span> Mi Filosofía Técnica
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 text-slate-300">
-                  <div className="space-y-2">
-                    <h4 className="text-base sm:text-lg font-semibold text-cyber-cyan flex items-center gap-2">
-                      <i className="fa-solid fa-database text-xs"></i> El valor de los datos
-                    </h4>
-                    <p className="text-xs sm:text-sm leading-relaxed">
-                      Un negocio moderno no puede crecer a ciegas. Utilizo mis habilidades en SQL, Python y estructuración para limpiar planillas desordenadas, centralizarlas en bases de datos eficientes y dar visibilidad total a la gestión del cliente.
-                    </p>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-base sm:text-lg font-semibold text-cyber-purple flex items-center gap-2">
-                      <i className="fa-solid fa-network-wired text-xs"></i> Solidez de Infraestructura
-                    </h4>
-                    <p className="text-xs sm:text-sm leading-relaxed">
-                      Mi experiencia en Soporte L1 me enseñó a crear cosas que no se rompan fácilmente y a dar soluciones claras. Sé configurar entornos, optimizar hosting (cPanel), securizar flujos y brindar asistencia con una empatía real hacia el usuario final.
-                    </p>
-                  </div>
-                </div>
-              </div>
+    <span className="text-[10px] sm:text-xs font-mono text-cyber-cyan block mb-2">
+      01 / ADAPTABLE
+    </span>
+
+    <h2 className="text-xl font-bold mb-3 group-hover:text-cyber-cyan transition-colors">
+      Soluciones a medida
+    </h2>
+
+    <p className="text-sm text-slate-400 leading-relaxed">
+      Analizamos cómo trabaja tu empresa y construimos una solución ajustada
+      a sus necesidades reales, sin agregar funciones innecesarias.
+    </p>
+  </article>
+
+  <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-purple/50 rounded-xl p-5 sm:p-6 relative overflow-hidden transition-all group">
+    <div className="absolute top-4 right-4 text-cyber-purple/15 text-4xl">
+      <i className="fa-solid fa-arrow-trend-up"></i>
+    </div>
+
+    <span className="text-[10px] sm:text-xs font-mono text-cyber-purple block mb-2">
+      02 / ESCALABLE
+    </span>
+
+    <h2 className="text-xl font-bold mb-3 group-hover:text-cyber-purple transition-colors">
+      Empezar simple y crecer
+    </h2>
+
+    <p className="text-sm text-slate-400 leading-relaxed">
+      Podemos comenzar con una primera versión pequeña y agregar nuevas
+      funcionalidades a medida que tu negocio las necesite.
+    </p>
+  </article>
+
+  <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-emerald/50 rounded-xl p-5 sm:p-6 relative overflow-hidden transition-all group">
+    <div className="absolute top-4 right-4 text-cyber-emerald/15 text-4xl">
+      <i className="fa-solid fa-user-check"></i>
+    </div>
+
+    <span className="text-[10px] sm:text-xs font-mono text-cyber-emerald block mb-2">
+      03 / CERCANO
+    </span>
+
+    <h2 className="text-xl font-bold mb-3 group-hover:text-cyber-emerald transition-colors">
+      Acompañamiento directo
+    </h2>
+
+    <p className="text-sm text-slate-400 leading-relaxed">
+      Mantenemos una comunicación clara durante todo el proyecto y explicamos
+      cada decisión de forma sencilla y transparente.
+    </p>
+  </article>
+</div>
+
+{/* CÓMO TRABAJAMOS */}
+<section className="space-y-6">
+  <div className="space-y-2">
+    <span className="text-xs font-mono tracking-[0.2em] text-cyber-cyan">
+      // PROCESO DE TRABAJO
+    </span>
+
+    <h2 className="text-2xl sm:text-3xl font-display font-bold">
+      De una necesidad a una solución real
+    </h2>
+
+    <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-3xl">
+      Trabajamos en etapas concretas para reducir riesgos, ordenar prioridades
+      y construir una solución que aporte valor desde su primera versión.
+    </p>
+  </div>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+    <article className="bg-cyber-dark/30 border border-cyber-border rounded-xl p-5">
+      <div className="flex items-center justify-between mb-4">
+        <span className="font-display text-2xl text-cyber-cyan">
+          01
+        </span>
+
+        <i className="fa-regular fa-comments text-cyber-cyan"></i>
+      </div>
+
+      <h3 className="font-bold mb-2">
+        Escuchamos
+      </h3>
+
+      <p className="text-sm text-slate-400 leading-relaxed">
+        Conversamos sobre tu negocio, el problema actual y los resultados que
+        esperás conseguir.
+      </p>
+    </article>
+
+    <article className="bg-cyber-dark/30 border border-cyber-border rounded-xl p-5">
+      <div className="flex items-center justify-between mb-4">
+        <span className="font-display text-2xl text-cyber-purple">
+          02
+        </span>
+
+        <i className="fa-solid fa-magnifying-glass-chart text-cyber-purple"></i>
+      </div>
+
+      <h3 className="font-bold mb-2">
+        Analizamos
+      </h3>
+
+      <p className="text-sm text-slate-400 leading-relaxed">
+        Identificamos las funciones esenciales y definimos una primera versión
+        realista para el proyecto.
+      </p>
+    </article>
+
+    <article className="bg-cyber-dark/30 border border-cyber-border rounded-xl p-5">
+      <div className="flex items-center justify-between mb-4">
+        <span className="font-display text-2xl text-cyber-blue">
+          03
+        </span>
+
+        <i className="fa-solid fa-code text-cyber-blue"></i>
+      </div>
+
+      <h3 className="font-bold mb-2">
+        Construimos
+      </h3>
+
+      <p className="text-sm text-slate-400 leading-relaxed">
+        Diseñamos y desarrollamos la solución mostrando avances para validar
+        que vamos por el camino correcto.
+      </p>
+    </article>
+
+    <article className="bg-cyber-dark/30 border border-cyber-border rounded-xl p-5">
+      <div className="flex items-center justify-between mb-4">
+        <span className="font-display text-2xl text-cyber-emerald">
+          04
+        </span>
+
+        <i className="fa-solid fa-rocket text-cyber-emerald"></i>
+      </div>
+
+      <h3 className="font-bold mb-2">
+        Implementamos
+      </h3>
+
+      <p className="text-sm text-slate-400 leading-relaxed">
+        Publicamos la solución, explicamos su funcionamiento y acompañamos sus
+        primeros pasos.
+      </p>
+    </article>
+  </div>
+</section>
+
+{/* LLAMADO A LA ACCIÓN */}
+<section className="relative overflow-hidden bg-cyber-dark/50 border border-cyber-border rounded-2xl p-6 sm:p-8">
+  <div className="absolute -top-20 -right-20 w-56 h-56 bg-cyber-purple/15 rounded-full blur-3xl"></div>
+  <div className="absolute -bottom-20 -left-20 w-56 h-56 bg-cyber-cyan/10 rounded-full blur-3xl"></div>
+
+  <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+    <div className="space-y-3 max-w-2xl">
+      <span className="text-xs font-mono tracking-[0.2em] text-cyber-emerald">
+        IDEA → SOLUCIÓN
+      </span>
+
+      <h2 className="text-2xl sm:text-3xl font-display font-bold">
+        Tu empresa puede trabajar de una forma más simple
+      </h2>
+
+      <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
+        Contanos qué tarea, proceso o necesidad querés mejorar y evaluamos una
+        primera solución posible.
+      </p>
+    </div>
+
+    <button
+      onClick={() => navigateTo('soporte')}
+      className="bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg shadow-cyber-purple/20 shrink-0"
+    >
+      <i className="fa-regular fa-comment-dots"></i>
+      Hablemos de tu proyecto
+    </button>
+  </div>
+</section>
             </div>
           )}
 
