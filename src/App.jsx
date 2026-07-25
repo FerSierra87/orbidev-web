@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 export default function App() {
   const location = useLocation();
@@ -300,53 +300,66 @@ ${ticket.desc || 'Quiero recibir más información.'}
           {/* LISTA DE NAVEGACIÓN COMPACTA */}
           <div className="space-y-2 pt-3">
             <span className="text-[10px] font-mono tracking-widest text-slate-500 block px-3 mb-2"> NAVEGACIÓN ORBIDEV</span>
-            <button
-  onClick={() => navigateTo('inicio')}
-  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${
-    activeTab === 'inicio'
-      ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan'
-      : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'
-  }`}
+            <NavLink
+  to="/"
+  onClick={() => setIsSidebarOpen(false)}
+  className={({ isActive }) =>
+    `w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${
+      isActive
+        ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan'
+        : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'
+    }`
+  }
 >
   <i className="fa-solid fa-house text-xs"></i>
   <span>01_INICIO</span>
-</button>
+</NavLink>
 
-<button
-  onClick={() => navigateTo('terminal')}
-  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${
-    activeTab === 'terminal'
-      ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan'
-      : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'
-  }`}
+<NavLink
+  to="/servicios"
+  onClick={() => setIsSidebarOpen(false)}
+  className={({ isActive }) =>
+    `w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${
+      isActive
+        ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan'
+        : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'
+    }`
+  }
 >
   <i className="fa-solid fa-layer-group text-xs"></i>
   <span>02_SERVICIOS</span>
-</button>
+</NavLink>
 
-<button
-  onClick={() => navigateTo('proyectos')}
-  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${
-    activeTab === 'proyectos'
-      ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan'
-      : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'
-  }`}
+<NavLink
+  to="/proyectos"
+  onClick={() => setIsSidebarOpen(false)}
+  className={({ isActive }) =>
+    `w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${
+      isActive
+        ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan'
+        : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'
+    }`
+  }
 >
   <i className="fa-solid fa-briefcase text-xs"></i>
   <span>03_PROYECTOS</span>
-</button>
+</NavLink>
 
-<button
-  onClick={() => navigateTo('soporte')}
-  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${
-    activeTab === 'soporte'
-      ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan'
-      : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'
-  }`}
+<NavLink
+  to="/contacto"
+  onClick={() => setIsSidebarOpen(false)}
+  className={({ isActive }) =>
+    `w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${
+      isActive
+        ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan'
+        : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'
+    }`
+  }
 >
   <i className="fa-solid fa-envelope text-xs"></i>
   <span>04_CONTACTO</span>
-</button>
+</NavLink>
+          
           </div>
 
           
