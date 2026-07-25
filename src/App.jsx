@@ -1,9 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function App() {
-  // Estado para controlar la sección o pestaña activa
-  const [activeTab, setActiveTab] = useState('inicio');
+  const location = useLocation();
+const navigate = useNavigate();
+
+const routeToTab = {
+  '/': 'inicio',
+  '/servicios': 'terminal',
+  '/proyectos': 'proyectos',
+  '/contacto': 'soporte',
+};
+
+const activeTab = routeToTab[location.pathname] || 'inicio';
   
   // Estado para medir el porcentaje de desplazamiento vertical (scroll)
   const [scrollPercent, setScrollPercent] = useState(0);
@@ -55,15 +65,23 @@ const [formState, handleFormSubmit] = useForm('xojgkepz');
   };
 
   // Función de navegación segura que cierra el menú lateral en móviles
-  // y resetea el scroll (se hace acá, en el evento, en vez de en un useEffect)
   const navigateTo = (tabId) => {
-    setActiveTab(tabId);
-    setIsSidebarOpen(false); // Cierra el menú en responsive
-    setScrollPercent(0);
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTop = 0;
-    }
+  const tabToRoute = {
+    inicio: '/',
+    terminal: '/servicios',
+    proyectos: '/proyectos',
+    soporte: '/contacto',
   };
+
+  navigate(tabToRoute[tabId] || '/');
+
+  setIsSidebarOpen(false);
+  setScrollPercent(0);
+
+  if (scrollContainerRef.current) {
+    scrollContainerRef.current.scrollTop = 0;
+  }
+};
 
   // Auto-scroll para mantener la terminal siempre enfocada en el último comando impreso
   useEffect(() => {
