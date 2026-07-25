@@ -1,21 +1,68 @@
+// ============================================================
+// DEPENDENCIAS
+// ============================================================
+
 import { useState, useEffect, useRef } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+
 
 export default function App() {
-  const location = useLocation();
-const navigate = useNavigate();
+  // ============================================================
+  // NAVEGACIÓN Y RUTAS
+  // Relaciona cada URL pública con la sección interna existente.
+  // Se conservan los ids "terminal" y "soporte" para mantener
+  // compatibilidad con la estructura original de la aplicación.
+  // ============================================================
 
-const routeToTab = {
-  '/': 'inicio',
-  '/servicios': 'terminal',
-  '/proyectos': 'proyectos',
-  '/contacto': 'soporte',
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const routeToTab = {
+    '/': 'inicio',
+    '/servicios': 'terminal',
+    '/proyectos': 'proyectos',
+    '/contacto': 'soporte',
+  };
+
+  const activeTab = routeToTab[location.pathname] || 'inicio';
+
+  // ============================================================
+  // CONFIGURACIÓN SEO POR RUTA
+  // Títulos, descripciones y canonical se actualizan según la URL.
+  // ============================================================
+
+  const seoData = {
+  '/': {
+    title: 'Orbidev | Soluciones digitales para empresas',
+    description:
+      'Desarrollamos sitios web, sistemas a medida, automatizaciones y soluciones digitales para pequeñas y medianas empresas.',
+  },
+  '/servicios': {
+    title: 'Servicios | Orbidev',
+    description:
+      'Conocé los servicios de Orbidev: desarrollo web, sistemas a medida, automatización de procesos, tiendas online y consultoría tecnológica.',
+  },
+  '/proyectos': {
+    title: 'Proyectos | Orbidev',
+    description:
+      'Explorá proyectos desarrollados por Orbidev en desarrollo web, soporte, automatización, Java, React, Firebase, Supabase y más.',
+  },
+  '/contacto': {
+    title: 'Contacto | Orbidev',
+    description:
+      'Contactá a Orbidev para conversar sobre tu próximo sitio web, sistema, automatización o solución digital para tu empresa.',
+  },
 };
 
-const activeTab = routeToTab[location.pathname] || 'inicio';
-  
-  // Estado para medir el porcentaje de desplazamiento vertical (scroll)
+  const currentSeo = seoData[location.pathname] || seoData['/'];
+
+  // ============================================================
+  // ESTADO DE LA INTERFAZ
+  // ============================================================
+
+  // Porcentaje de desplazamiento vertical del panel principal.
   const [scrollPercent, setScrollPercent] = useState(0);
   
   // Estado para la entrada de texto en la consola interactiva
@@ -35,18 +82,22 @@ const activeTab = routeToTab[location.pathname] || 'inicio';
   // Estado para controlar qué proyecto está abierto en el modal de detalles
   const [selectedProject, setSelectedProject] = useState(null);
   
-  // Estado para el simulador de tickets de soporte técnico de Nivel 1 (formulario)
- // Estado del formulario de contacto
-const [ticket, setTicket] = useState({
+  // Datos del formulario de contacto.
+  const [ticket, setTicket] = useState({
   name: '',
   email: '',
   desc: '',
   tipo: 'landing',
-});
+  });
 
-// Conexión con el formulario de Formspree
-const [formState, handleFormSubmit] = useForm('xojgkepz');
-  // Referencias para el contenedor de scroll y el final de la terminal
+  // Formspree procesa y envía las consultas recibidas desde el sitio.
+  const [formState, handleFormSubmit] = useForm('xojgkepz');
+
+  // ============================================================
+  // REFERENCIAS DE INTERFAZ
+  // ============================================================
+
+  // Referencias para el contenedor de scroll y el final de la terminal.
   const scrollContainerRef = useRef(null);
   const terminalEndRef = useRef(null);
 
@@ -64,24 +115,28 @@ const [formState, handleFormSubmit] = useForm('xojgkepz');
     }
   };
 
-  // Función de navegación segura que cierra el menú lateral en móviles
+  // ============================================================
+  // FUNCIONES DE NAVEGACIÓN
+  // ============================================================
+
+  // Navega a una ruta, cierra el menú móvil y reinicia el scroll.
   const navigateTo = (tabId) => {
-  const tabToRoute = {
+    const tabToRoute = {
     inicio: '/',
     terminal: '/servicios',
     proyectos: '/proyectos',
     soporte: '/contacto',
+    };
+
+    navigate(tabToRoute[tabId] || '/');
+
+    setIsSidebarOpen(false);
+    setScrollPercent(0);
+
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
   };
-
-  navigate(tabToRoute[tabId] || '/');
-
-  setIsSidebarOpen(false);
-  setScrollPercent(0);
-
-  if (scrollContainerRef.current) {
-    scrollContainerRef.current.scrollTop = 0;
-  }
-};
 
   // Auto-scroll para mantener la terminal siempre enfocada en el último comando impreso
   useEffect(() => {
@@ -126,8 +181,12 @@ const [formState, handleFormSubmit] = useForm('xojgkepz');
     setTerminalInput('');
   };
 
-  // Mensajes adaptativos de la mascota según la posición del scroll de lectura
-const getMascotMessage = () => {
+  // ============================================================
+  // ASISTENTE ORBIT
+  // Mensajes adaptativos según el avance de lectura en Inicio.
+  // ============================================================
+
+  const getMascotMessage = () => {
   if (scrollPercent < 25) {
     return 'Primero entendemos qué necesita realmente tu empresa.';
   }
@@ -144,10 +203,14 @@ const getMascotMessage = () => {
     return 'Ya conocés cómo trabajamos. El siguiente paso es contarnos tu necesidad.';
   }
 
-  return '¡Recorrido completado! ¿Hablamos de tu próximo proyecto?';
-};
+    return '¡Recorrido completado! ¿Hablamos de tu próximo proyecto?';
+  };
 
-  // Proyectos reales, con sus repositorios y demos en vivo
+  // ============================================================
+  // DATOS DE PROYECTOS
+  // Información usada por las tarjetas y el modal de detalle.
+  // ============================================================
+
   const projectsData = [
   {
     id: 1,
@@ -197,15 +260,21 @@ const getMascotMessage = () => {
     'https://github.com/FerSierra87/helpdesk-core-frontend',
   demo: 'https://helpdesk-core-one.web.app',
 },
-];
-const openWhatsApp = () => {
+  ];
+
+  // ============================================================
+  // CONTACTO POR WHATSAPP
+  // Construye un mensaje con los datos actuales del formulario.
+  // ============================================================
+
+  const openWhatsApp = () => {
   const serviceLabels = {
     landing: 'Sitio web o landing page',
-    system: 'Sistema a medida',
-    automation: 'Automatización de procesos',
+    sistema: 'Sistema a medida',
+    automatizacion: 'Automatización de procesos',
     ecommerce: 'Tienda online',
-    consulting: 'Consultoría tecnológica',
-    other: 'Otra consulta',
+    datos: 'Datos e integraciones',
+    otro: 'Otra consulta',
   };
 
   const selectedService =
@@ -227,21 +296,38 @@ ${ticket.desc || 'Quiero recibir más información.'}
   window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 };
 
-  /* Envía el formulario simulado de incidentes informáticos
-  const submitTicket = (e) => {
-    e.preventDefault();
-    setIsTicketSubmitted(true);
-    setTimeout(() => {
-      setIsTicketSubmitted(false);
-      setTicket({ name: '', email: '', desc: '', tipo: 'landing' });
-    }, 4000);
-  };*/
+
   
 
+  // ============================================================
+  // RENDER PRINCIPAL
+  // ============================================================
+
   return (
-    <div className="w-full h-screen bg-cyber-panel overflow-hidden relative flex flex-col glow-active">
+    <>
+      {/* =========================================================
+          SEO DINÁMICO
+          Actualiza título, descripción y canonical según la ruta.
+      ========================================================== */}
+      <Helmet>
+      <title>{currentSeo.title}</title>
+
+      <meta
+        name="description"
+        content={currentSeo.description}
+      />
+
+      <link
+        rel="canonical"
+        href={`https://orbidev.uy${location.pathname}`}
+      />
+      </Helmet>
+
+      <div className="w-full h-screen bg-cyber-panel overflow-hidden relative flex flex-col glow-active">
       
-      {/* BARRA DE TÍTULO SUPERIOR (AHORA CON BOTÓN HAMBURGUESA EN MÓVIL) */}
+                {/* =========================================================
+              HEADER PRINCIPAL
+          ========================================================== */}
       <div className="h-12 bg-cyber-dark border-b border-cyber-border px-4 md:px-6 flex items-center justify-between z-40 shrink-0">
         <div className="flex items-center gap-3">
           {/* Botón Hamburguesa visible solo en móviles */}
@@ -280,7 +366,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
 
       <div className="flex flex-1 overflow-hidden relative">
         
-        {/* BACKDROP/CORTINA OSCURA EN MÓVIL AL ABRIR EL MENÚ */}
+                  {/* Fondo oscuro que aparece detrás del menú en móviles. */}
         {isSidebarOpen && (
           <div 
             onClick={() => setIsSidebarOpen(false)}
@@ -288,7 +374,9 @@ ${ticket.desc || 'Quiero recibir más información.'}
           />
         )}
 
-        {/* MENU LATERAL RESPONSIVE CON MÁXIMA COMPATIBILIDAD DE ALTURAS */}
+                  {/* =========================================================
+              MENÚ LATERAL / NAVEGACIÓN PRINCIPAL
+          ========================================================== */}
         <div className={`
           fixed md:relative top-0 bottom-0 left-0 z-30 md:z-10
           w-[85vw] max-w-72 md:w-80 md:max-w-none bg-cyber-dark/95 md:bg-cyber-dark/60 
@@ -297,7 +385,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}>
           
-          {/* LISTA DE NAVEGACIÓN COMPACTA */}
+          {/* Enlaces principales */}
           <div className="space-y-2 pt-3">
             <span className="text-[10px] font-mono tracking-widest text-slate-500 block px-3 mb-2"> NAVEGACIÓN ORBIDEV</span>
             <NavLink
@@ -365,18 +453,22 @@ ${ticket.desc || 'Quiero recibir más información.'}
           
         </div>
 
-        {/* PANEL PRINCIPAL DE CONTENIDO DESLIZABLE (100% ANCHO EN MÓVIL) */}
+                  {/* =========================================================
+              CONTENIDO PRINCIPAL
+          ========================================================== */}
         <div 
           ref={scrollContainerRef}
           onScroll={handleScroll}
           className="flex-1 overflow-y-auto bg-cyber-panel/40 relative w-full h-full"
         >
           
-          {/* PESTAÑA: INICIO */}
+                    {/* =========================================================
+              SECCIÓN: INICIO
+          ========================================================== */}
           {activeTab === 'inicio' && (
             <div className="p-4 sm:p-6 md:p-10 xl:pr-76 space-y-10 md:space-y-16 max-w-7xl">
               
-             {/* PRESENTACIÓN */}
+             {/* Presentación / Hero */}
           <div className="space-y-4 md:space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyber-emerald/10 border border-cyber-emerald/20 rounded-full text-[10px] sm:text-xs font-mono text-cyber-emerald max-w-full">
              <span className="w-1.5 h-1.5 bg-cyber-emerald rounded-full animate-pulse shrink-0"></span>
@@ -430,7 +522,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
   </div>
 </div>
 
-              {/* PROPUESTA DE VALOR */}
+              {/* Propuesta de valor */}
 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
   <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-cyan/50 rounded-xl p-5 sm:p-6 relative overflow-hidden transition-all group">
     <div className="absolute top-4 right-4 text-cyber-cyan/15 text-4xl">
@@ -490,7 +582,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
   </article>
 </div>
 
-{/* CÓMO TRABAJAMOS */}
+{/* Proceso de trabajo */}
 <section className="space-y-6">
   <div className="space-y-2">
     <span className="text-xs font-mono tracking-[0.2em] text-cyber-cyan">
@@ -585,7 +677,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
     </article>
   </div>
 </section>
-{/* QUIÉN ESTÁ DETRÁS DE ORBIDEV */}
+{/* Quién está detrás de Orbidev */}
 <section className="space-y-6">
   <div className="space-y-3">
     <span className="font-mono text-xs tracking-[0.2em] text-cyber-cyan">
@@ -733,7 +825,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
   </div>
 </section>
 
-{/* LLAMADO A LA ACCIÓN */}
+{/* Llamado a la acción */}
 <section className="relative overflow-hidden bg-cyber-dark/50 border border-cyber-border rounded-2xl p-6 sm:p-8">
   <div className="absolute -top-20 -right-20 w-56 h-56 bg-cyber-purple/15 rounded-full blur-3xl"></div>
   <div className="absolute -bottom-20 -left-20 w-56 h-56 bg-cyber-cyan/10 rounded-full blur-3xl"></div>
@@ -766,7 +858,9 @@ ${ticket.desc || 'Quiero recibir más información.'}
             </div>
           )}
 
-          {/* PESTAÑA: PROYECTOS */}
+                    {/* =========================================================
+              SECCIÓN: PROYECTOS
+          ========================================================== */}
           {activeTab === 'proyectos' && (
             <div className="p-4 sm:p-6 md:p-10 space-y-8 md:space-y-10 max-w-5xl">
               <div className="space-y-2">
@@ -809,7 +903,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
                 ))}
               </div>
 
-     {/* PANEL DE TECNOLOGÍAS */}
+     {/* Tecnologías utilizadas */}
 <div className="bg-cyber-dark/20 border border-cyber-border rounded-xl p-5 sm:p-8">
   <h3 className="text-xs font-mono tracking-widest text-slate-400 mb-6 sm:text-center">
     TECNOLOGÍAS UTILIZADAS EN NUESTROS DESARROLLOS
@@ -860,7 +954,9 @@ ${ticket.desc || 'Quiero recibir más información.'}
             </div>
           )}
 
-          {/* PESTAÑA: SERVICIOS */}
+                    {/* =========================================================
+              SECCIÓN: SERVICIOS
+          ========================================================== */}
 {activeTab === 'terminal' && (
   <div className="p-4 sm:p-6 md:p-10 space-y-8 md:space-y-10 max-w-6xl">
     <div className="space-y-3">
@@ -992,7 +1088,9 @@ ${ticket.desc || 'Quiero recibir más información.'}
     </div>
   </div>
 )}
-  {/* PESTAÑA: CONTACTO */}
+            {/* =========================================================
+              SECCIÓN: CONTACTO
+          ========================================================== */}
 {activeTab === 'soporte' && (
   <div className="p-4 sm:p-6 md:p-10 space-y-8 md:space-y-10 max-w-5xl">
     <div className="space-y-3">
@@ -1084,7 +1182,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
               <label
                 htmlFor="contact-name"
                 className="text-xs font-mono text-slate-400"
-              >q
+              >
                 Nombre o empresa
               </label>
 
@@ -1255,7 +1353,9 @@ ${ticket.desc || 'Quiero recibir más información.'}
         </div>
         
 
-        {/* ASISTENTE FLOTANTE ORBIT */}
+                  {/* =========================================================
+              ASISTENTE FLOTANTE ORBIT
+          ========================================================== */}
         {activeTab === 'inicio' && scrollPercent > 8 && (
           <aside className="hidden xl:flex fixed right-6 top-24 z-30 w-64 flex-col items-center">
             <div className="relative w-full bg-cyber-dark/95 border border-cyber-purple/40 rounded-2xl p-4 shadow-2xl shadow-cyber-purple/10 backdrop-blur-md">
@@ -1320,7 +1420,9 @@ ${ticket.desc || 'Quiero recibir más información.'}
         
       
 
-      {/* MODAL PARA DETALLE DEL PROYECTO SELECCIONADO (RESPONSIVE SEGURO) */}
+            {/* ============================================================
+          MODAL DE DETALLE DE PROYECTO
+      ============================================================= */}
       {selectedProject && (
         <div className="absolute inset-0 bg-cyber-dark/80 backdrop-blur-xs z-50 flex items-center justify-center p-4">
           <div className="bg-cyber-panel border border-cyber-border w-full max-w-lg rounded-xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
@@ -1364,7 +1466,9 @@ ${ticket.desc || 'Quiero recibir más información.'}
         </div>
       )}
 
-      {/* BARRA DE ESTADO INFERIOR */}
+            {/* ============================================================
+          BARRA DE ESTADO INFERIOR
+      ============================================================= */}
       <div className="h-8 bg-cyber-dark border-t border-cyber-border px-4 md:px-6 flex items-center justify-between z-40 text-[9px] sm:text-[10px] font-mono text-slate-500 shrink-0">
         <span className="truncate">STATUS: OPERATIONAL</span>
         <div className="flex gap-2 sm:gap-4 truncate">
@@ -1373,6 +1477,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
         </div>
       </div>
 
-    </div>
+      </div>
+    </>
   );
 }
