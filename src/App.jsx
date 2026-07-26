@@ -35,7 +35,7 @@ export default function App() {
 
   const seoData = {
   '/': {
-    title: 'Orbidev | Soluciones digitales para empresas',
+    title: 'Orbidev | Soluciones digitales',
     description:
       'Desarrollamos sitios web, sistemas a medida, automatizaciones y soluciones digitales para pequeñas y medianas empresas.',
   },
