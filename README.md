@@ -1,16 +1,99 @@
-# React + Vite
+# ORBIDEV
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sitio web oficial de **ORBIDEV**, una iniciativa orientada al desarrollo de soluciones digitales para pequeñas y medianas empresas.
 
-Currently, two official plugins are available:
+🌐 **Sitio web:** https://orbidev.uy
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Sobre ORBIDEV
 
-## React Compiler
+ORBIDEV desarrolla soluciones digitales pensadas para ayudar a empresas y emprendimientos a mejorar su presencia online, organizar procesos y aprovechar la tecnología de forma sencilla.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Entre los servicios se incluyen:
 
-## Expanding the ESLint configuration
+- Sitios web profesionales
+- Tiendas online
+- Sistemas a medida
+- Automatizaciones
+- Desarrollo de soluciones digitales
+- Proyectos propios de software
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tecnologías
+
+El sitio fue desarrollado utilizando:
+
+- React
+- Vite
+- Tailwind CSS
+- React Router
+- Formspree
+- Firebase Hosting
+- Git / GitHub
+
+## Características
+
+- Diseño responsive
+- Identidad visual propia de ORBIDEV
+- Presentación de servicios
+- Sección de proyectos
+- Formulario de contacto
+- Contacto directo mediante WhatsApp
+- SEO básico
+- Open Graph para compartir el sitio en redes sociales y mensajería
+- Dominio personalizado
+
+## Desarrollo local
+
+Clonar el repositorio:
+
+```bash
+git clone https://github.com/FerSierra87/orbidev-web.git
+```
+
+Entrar al proyecto:
+
+```bash
+cd orbidev-web
+```
+
+Instalar dependencias:
+
+```bash
+npm install
+```
+
+Iniciar el entorno de desarrollo:
+
+```bash
+npm run dev
+```
+
+## Build de producción
+
+```bash
+npm run build
+```
+
+Los archivos de producción se generan dentro de:
+
+```text
+dist/
+```
+
+## Deploy
+
+El sitio está desplegado mediante Firebase Hosting.
+
+Para realizar un nuevo despliegue:
+
+```bash
+firebase deploy --only hosting
+```
+
+## Sitio en producción
+
+https://orbidev.uy
+
+---
+
+**ORBIDEV**  
+Soluciones digitales para empresas.
