@@ -340,20 +340,10 @@ ${ticket.desc || 'Quiero recibir más información.'}
           </button>
 
           <img
-  src="/orbidev-isotipo.svg"
-  alt="Isotipo de Orbidev"
-  className="w-7 h-7 object-contain"
-/>
-
-<div className="flex flex-col leading-none">
-  <span className="font-display text-xs sm:text-sm tracking-[0.18em] text-white">
-    ORBIDEV
-  </span>
-
-  <span className="hidden sm:block mt-1 font-mono text-[8px] tracking-[0.2em] text-cyber-cyan">
-    SOLUCIONES DIGITALES
-  </span>
-</div>
+            src="/orbidev-logo-web.svg"
+            alt="ORBIDEV - Soluciones Digitales"
+            className="h-10 sm:h-11 w-auto object-contain"
+          />
         </div>
         
         {/* CONTROLES DE LA VENTANA */}
@@ -703,9 +693,9 @@ ${ticket.desc || 'Quiero recibir más información.'}
       <div className="relative flex flex-col sm:flex-row items-start gap-5">
         <div className="w-16 h-16 shrink-0 rounded-2xl bg-cyber-purple/10 border border-cyber-purple/30 flex items-center justify-center">
           <img
-            src="/orbidev-isotipo.svg"
+            src="/orbidev-isotipo-web.svg"
             alt="Isotipo de Orbidev"
-            className="w-10 h-10 object-contain"
+            className="w-12 h-12 object-contain"
           />
         </div>
 
