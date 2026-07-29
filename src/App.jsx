@@ -221,7 +221,7 @@ export default function App() {
       'Transformación de un portafolio técnico en el sitio corporativo de Orbidev. El proyecto utiliza React, Vite y Tailwind CSS, incorpora una identidad visual personalizada y presenta servicios, proyectos y canales de contacto dentro de una experiencia moderna y adaptable a distintos dispositivos.',
     icon: 'fa-window-maximize',
     color: 'text-cyber-cyan',
-    github: 'https://github.com/FerSierra87/portafolio-os',
+    github: 'https://github.com/FerSierra87/orbidev-web',
   },
   {
     id: 2,
