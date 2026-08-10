@@ -6,7 +6,21 @@ import { useState, useEffect, useRef } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import {
+  getStoredAnalyticsConsent,
+  isAnalyticsConfigured,
+  loadGoogleAnalytics,
+  saveAnalyticsConsent,
+  trackPageView,
+} from './analytics.js';
 
+const initialTicket = {
+  name: '',
+  company: '',
+  email: '',
+  desc: '',
+  tipo: 'landing',
+};
 
 export default function App() {
   // ============================================================
@@ -47,7 +61,7 @@ export default function App() {
   '/proyectos': {
     title: 'Proyectos | Orbidev',
     description:
-      'Explorá proyectos desarrollados por Orbidev en desarrollo web, soporte, automatización, Java, React, Firebase, Supabase y más.',
+      'Conocé ORBIDEV Reserva y proyectos técnicos de desarrollo web, automatización, datos y sistemas de gestión.',
   },
   '/contacto': {
     title: 'Contacto | Orbidev',
@@ -65,41 +79,31 @@ export default function App() {
   // Porcentaje de desplazamiento vertical del panel principal.
   const [scrollPercent, setScrollPercent] = useState(0);
   
-  // Estado para la entrada de texto en la consola interactiva
-  const [terminalInput, setTerminalInput] = useState('');
-  
   // Estado para el menú lateral colapsable (responsive)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   
-  // Historial de la consola con mensajes iniciales del sistema
-  const [terminalHistory, setTerminalHistory] = useState([
-    { type: 'system', text: 'PORTAFOLIO_OS [Versión 1.0.12]' },
-    { type: 'system', text: 'Inicializando conexión de desarrollo local...' },
-    { type: 'success', text: 'Entorno de Vite listo y escuchando en el puerto 5173.' },
-    { type: 'system', text: 'Escribí "help" para ver los comandos disponibles en el sistema.' }
-  ]);
-  
   // Estado para controlar qué proyecto está abierto en el modal de detalles
   const [selectedProject, setSelectedProject] = useState(null);
+
+  const [analyticsConsent, setAnalyticsConsent] = useState(
+    getStoredAnalyticsConsent,
+  );
+  const [showAnalyticsConsent, setShowAnalyticsConsent] = useState(
+    isAnalyticsConfigured && !getStoredAnalyticsConsent(),
+  );
   
   // Datos del formulario de contacto.
-  const [ticket, setTicket] = useState({
-  name: '',
-  email: '',
-  desc: '',
-  tipo: 'landing',
-  });
+  const [ticket, setTicket] = useState(initialTicket);
 
   // Formspree procesa y envía las consultas recibidas desde el sitio.
-  const [formState, handleFormSubmit] = useForm('xojgkepz');
+  const [formState, handleFormSubmit, resetForm] = useForm('xojgkepz');
 
   // ============================================================
   // REFERENCIAS DE INTERFAZ
   // ============================================================
 
-  // Referencias para el contenedor de scroll y el final de la terminal.
+  // Referencia para el contenedor principal con scroll.
   const scrollContainerRef = useRef(null);
-  const terminalEndRef = useRef(null);
 
   // Calcula el porcentaje de scroll del panel de contenido de forma segura
   const handleScroll = () => {
@@ -113,6 +117,10 @@ export default function App() {
         setScrollPercent(0);
       }
     }
+  };
+
+  const scrollToTop = () => {
+    scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // ============================================================
@@ -138,48 +146,38 @@ export default function App() {
     }
   };
 
-  // Auto-scroll para mantener la terminal siempre enfocada en el último comando impreso
-  useEffect(() => {
-    if (terminalEndRef.current) {
-      terminalEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [terminalHistory]);
-
-  // Parser interactivo de comandos para la consola del programador
-  const handleTerminalSubmit = (e) => {
-    e.preventDefault();
-    const cmd = terminalInput.trim().toLowerCase();
-    if (!cmd) return;
-
-    const newHistory = [...terminalHistory, { type: 'input', text: `$ ${terminalInput}` }];
-
-    switch (cmd) {
-      case 'help':
-        newHistory.push({ type: 'output', text: 'Comandos disponibles:\n  about     - Información de mi perfil y trasfondo (UTEC / L1)\n  projects  - Listado de proyectos técnicos destacados\n  skills    - Habilidades y tecnologías dominadas\n  clear     - Limpiar la consola\n  secret    - Ejecutar módulo oculto de desarrollo' });
-        break;
-      case 'about':
-        newHistory.push({ type: 'output', text: 'PERFIL: Consultor TI / Desarrollador Full-Stack & Datos\nESTUDIOS: Licenciatura en Tecnologías de la Información (UTEC, 4to semestre - Tecnólogo inminente)\nEXPERIENCIA: Soporte L1 en el Ministerio del Interior. Resolución de incidencias críticas, redes y seguridad.' });
-        break;
-      case 'projects':
-        newHistory.push({ type: 'output', text: 'Proyectos destacados:\n  1. PORTAFOLIO_OS - Web SPA Reactiva con Firebase (Este sistema)\n  2. AUTOMATIZACIÓN SQL & PYTHON - Procesamiento y migración de datos limpia\n  3. PANEL CONTROL L1 - Mejora en la gestión de escalamiento técnico\n  4. HELPDESK CORE - Sistema full-stack Java + React con base de datos real' });
-        break;
-      case 'skills':
-        newHistory.push({ type: 'output', text: 'Habilidades Técnicas:\n  - FRONT-END: React JS, JavaScript, HTML5, CSS3 / Tailwind\n  - BACK-END/CLOUD: Java, Spring Boot, Firebase (Firestore, Auth, Hosting), cPanel, Servidores Linux\n  - BASES DE DATOS: SQL (PostgreSQL/MySQL), Python, Excel Avanzado' });
-        break;
-      case 'clear':
-        setTerminalHistory([]);
-        setTerminalInput('');
-        return;
-      case 'secret':
-        newHistory.push({ type: 'success', text: '🎉 ACCESO CONCEDIDO: ¡Gracias por explorar el código de este sistema! Estás viendo una Single Page Application (React) robusta y rápida.' });
-        break;
-      default:
-        newHistory.push({ type: 'error', text: `Comando no reconocido: "${cmd}". Escribí "help" para ver las opciones disponibles.` });
-    }
-
-    setTerminalHistory(newHistory);
-    setTerminalInput('');
+  const resetContactForm = () => {
+    resetForm();
+    setTicket(initialTicket);
+    scrollToTop();
   };
+
+  const handleAnalyticsChoice = (consent) => {
+    saveAnalyticsConsent(consent);
+    setAnalyticsConsent(consent);
+    setShowAnalyticsConsent(false);
+  };
+
+  useEffect(() => {
+    if (analyticsConsent === 'granted') loadGoogleAnalytics();
+  }, [analyticsConsent]);
+
+  useEffect(() => {
+    if (analyticsConsent === 'granted') {
+      trackPageView(location.pathname, currentSeo.title);
+    }
+  }, [analyticsConsent, currentSeo.title, location.pathname]);
+
+  useEffect(() => {
+    if (!selectedProject) return undefined;
+
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setSelectedProject(null);
+    };
+
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [selectedProject]);
 
   // ============================================================
   // ASISTENTE ORBIT
@@ -215,32 +213,32 @@ export default function App() {
   {
     id: 1,
     title: 'Sitio corporativo Orbidev',
-    tag: 'Java + Spring Boot + React + PostgreSQL',
-    desc: 'Sitio web corporativo responsive con identidad visual propia, navegación interactiva y enfoque comercial.',
+    tag: 'React 19 · Vite 8 · Tailwind CSS 4 · Firebase Hosting',
+    desc: 'Sitio corporativo responsive con navegación por rutas, SEO por sección y contacto integrado.',
     longDesc:
-      'Transformación de un portafolio técnico en el sitio corporativo de Orbidev. El proyecto utiliza React, Vite y Tailwind CSS, incorpora una identidad visual personalizada y presenta servicios, proyectos y canales de contacto dentro de una experiencia moderna y adaptable a distintos dispositivos.',
+      'Sitio corporativo construido con React 19, Vite 8 y Tailwind CSS 4. Usa React Router para sus rutas, React Helmet Async para metadatos y Formspree para el formulario de contacto. La aplicación se compila como sitio estático y se despliega mediante Firebase Hosting.',
     icon: 'fa-window-maximize',
     color: 'text-cyber-cyan',
     github: 'https://github.com/FerSierra87/orbidev-web',
   },
   {
     id: 2,
-    title: 'Automatización de datos',
-    tag: 'Python + SQL',
-    desc: 'Herramienta para limpiar, organizar y migrar información desde archivos CSV y Excel hacia bases de datos.',
+    title: 'Migración y limpieza de datos',
+    tag: 'Python · pandas · SQLAlchemy · PostgreSQL/MySQL',
+    desc: 'Herramienta de línea de comandos para limpiar CSV/XLSX y cargar sus datos en bases SQL.',
     longDesc:
-      'Solución orientada a reducir tareas manuales relacionadas con archivos y planillas. Permite normalizar columnas, detectar datos duplicados, eliminar registros vacíos y preparar información para su almacenamiento en PostgreSQL o MySQL.',
+      'Script en Python que lee archivos CSV y Excel con pandas, normaliza nombres de columnas, elimina filas vacías y duplicados, genera un reporte y migra el resultado con SQLAlchemy. Incluye control dry-run y conectores para PostgreSQL y MySQL.',
     icon: 'fa-database',
     color: 'text-cyber-emerald',
     github: 'https://github.com/FerSierra87/sql-python-data-migration',
   },
   {
     id: 3,
-    title: 'Clasificación de incidencias',
-    tag: 'Soporte + Automatización',
-    desc: 'Sistema para clasificar solicitudes técnicas, asignar prioridades y facilitar su resolución o escalamiento.',
+    title: 'Panel Control L1',
+    tag: 'React 18 · Vite 5 · Tailwind CSS 4 · localStorage',
+    desc: 'Panel de triage que clasifica tickets por reglas y sugiere prioridad y escalamiento.',
     longDesc:
-      'Proyecto inspirado en procesos reales de soporte técnico. Analiza la información de una incidencia, la categoriza según su contenido y permite organizar su prioridad. El objetivo es ayudar a reducir tiempos de clasificación y mejorar el seguimiento de solicitudes.',
+      'Aplicación frontend construida con React 18, Vite 5 y Tailwind CSS 4. Un motor local de reglas por palabras clave clasifica cada ticket, asigna prioridad y sugiere si debe escalarse a L2. El dashboard, los filtros y la persistencia funcionan en el navegador mediante localStorage; no utiliza backend ni inteligencia artificial.',
     icon: 'fa-list-check',
     color: 'text-cyber-purple',
     github: 'https://github.com/FerSierra87/panel-control-l1',
@@ -249,10 +247,10 @@ export default function App() {
   {
   id: 4,
   title: 'Helpdesk Core',
-  tag: 'Java + Spring Boot + React + Supabase + Render',
-  desc: 'Sistema web para gestionar clientes, equipos e incidencias mediante una arquitectura full-stack.',
+  tag: 'Java 21 · Spring Boot 3.5 · PostgreSQL · React 18',
+  desc: 'Sistema full-stack para gestionar clientes, equipos y tickets relacionados.',
   longDesc:
-    'Aplicación full-stack con API REST desarrollada en Java y Spring Boot, frontend en React y base de datos PostgreSQL gestionada con Supabase. El backend se encuentra desplegado en Render y el frontend consume la API para gestionar clientes, equipos y tickets. Incluye operaciones CRUD y comunicación entre frontend, backend y base de datos.',
+    'Solución con API REST en Java 21 y Spring Boot 3.5, persistencia JPA sobre PostgreSQL alojado en Supabase y despliegue Docker en Render. El frontend independiente usa React 18, Vite 5 y Tailwind CSS 4, consume la API con fetch y se publica en Firebase Hosting.',
   icon: 'fa-server',
   color: 'text-cyber-blue',
   github: 'https://github.com/FerSierra87/helpdesk-core',
@@ -267,8 +265,8 @@ export default function App() {
   // Construye un mensaje con los datos actuales del formulario.
   // ============================================================
 
-  const openWhatsApp = () => {
   const serviceLabels = {
+    reserva: 'ORBIDEV Reserva — piloto',
     landing: 'Sitio web o landing page',
     sistema: 'Sistema a medida',
     automatizacion: 'Automatización de procesos',
@@ -277,13 +275,16 @@ export default function App() {
     otro: 'Otra consulta',
   };
 
+  const openWhatsApp = () => {
+
   const selectedService =
     serviceLabels[ticket.tipo] || 'Consulta general';
 
   const message = `
 Hola Orbidev, quiero realizar una consulta.
 
-Nombre o empresa: ${ticket.name || 'No especificado'}
+Nombre: ${ticket.name || 'No especificado'}
+Empresa: ${ticket.company || 'No especificada'}
 Servicio: ${selectedService}
 Correo: ${ticket.email || 'No especificado'}
 
@@ -295,6 +296,11 @@ ${ticket.desc || 'Quiero recibir más información.'}
 
   window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 };
+
+  const startContact = (service = 'otro') => {
+    setTicket((currentTicket) => ({ ...currentTicket, tipo: service }));
+    navigateTo('soporte');
+  };
 
 
   
@@ -317,6 +323,13 @@ ${ticket.desc || 'Quiero recibir más información.'}
         content={currentSeo.description}
       />
 
+      <meta property="og:title" content={currentSeo.title} />
+      <meta property="og:description" content={currentSeo.description} />
+      <meta property="og:url" content={`https://orbidev.uy${location.pathname}`} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={currentSeo.title} />
+      <meta name="twitter:description" content={currentSeo.description} />
+
       <link
         rel="canonical"
         href={`https://orbidev.uy${location.pathname}`}
@@ -334,25 +347,45 @@ ${ticket.desc || 'Quiero recibir más información.'}
           <button 
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className="md:hidden text-slate-300 hover:text-cyber-cyan p-1.5 focus:outline-none transition-colors"
-            title="Menú del Sistema"
+            aria-label={isSidebarOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={isSidebarOpen}
           >
             <i className={`fa-solid ${isSidebarOpen ? 'fa-xmark' : 'fa-bars'} text-lg`}></i>
           </button>
 
-          <img
-            src="/orbidev-logo-web.svg"
-            alt="ORBIDEV - Soluciones Digitales"
-            className="h-10 sm:h-11 w-auto object-contain"
-          />
+          <button
+            type="button"
+            onClick={() => navigateTo('inicio')}
+            aria-label="Volver al inicio"
+            className="rounded-md cursor-pointer"
+          >
+            <img
+              src="/orbidev-logo-web.svg"
+              alt="ORBIDEV - Soluciones Digitales"
+              className="h-10 sm:h-11 w-auto object-contain"
+            />
+          </button>
         </div>
         
         {/* CONTROLES DE LA VENTANA */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2" aria-hidden="true">
           <span className="w-3 h-3 rounded-full bg-red-500/80 cursor-pointer block hover:bg-red-500"></span>
           <span className="w-3 h-3 rounded-full bg-yellow-500/80 cursor-pointer block hover:bg-yellow-500"></span>
           <span className="w-3 h-3 rounded-full bg-green-500/80 cursor-pointer block hover:bg-green-500"></span>
         </div>
       </div>
+
+      {scrollPercent > 12 && !showAnalyticsConsent && (
+        <button
+          type="button"
+          onClick={scrollToTop}
+          aria-label="Volver arriba"
+          className="fixed right-4 md:right-6 bottom-12 z-40 h-11 px-3 sm:px-4 rounded-full border border-cyber-cyan/50 bg-cyber-dark/95 text-cyber-cyan shadow-lg shadow-cyber-cyan/10 backdrop-blur-md flex items-center gap-2 font-mono text-xs hover:border-cyber-cyan hover:bg-cyber-cyan/10 transition-all cursor-pointer"
+        >
+          <i className="fa-solid fa-arrow-up"></i>
+          <span className="hidden sm:inline">VOLVER ARRIBA</span>
+        </button>
+      )}
 
       <div className="flex flex-1 overflow-hidden relative">
         
@@ -495,19 +528,19 @@ ${ticket.desc || 'Quiero recibir más información.'}
 
   <div className="flex flex-col sm:flex-row gap-3 pt-2">
     <button
-      onClick={() => navigateTo('proyectos')}
+      onClick={() => startContact('reserva')}
       className="bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg shadow-cyber-purple/20 text-sm"
     >
-      <i className="fa-solid fa-layer-group text-xs"></i>
-      Ver proyectos
+      <i className="fa-regular fa-calendar-check text-xs"></i>
+      Conocé ORBIDEV Reserva
     </button>
 
     <button
-      onClick={() => navigateTo('soporte')}
+      onClick={() => navigateTo('proyectos')}
       className="border border-cyber-cyan/30 hover:border-cyber-cyan text-slate-200 hover:text-cyber-cyan font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer text-sm"
     >
-      <i className="fa-regular fa-comment-dots text-xs"></i>
-      Contanos tu necesidad
+      <i className="fa-solid fa-layer-group text-xs"></i>
+      Ver proyectos
     </button>
   </div>
 </div>
@@ -667,7 +700,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
     </article>
   </div>
 </section>
-{/* Quién está detrás de Orbidev */}
+{/* Forma de trabajo */}
 <section className="space-y-6">
   <div className="space-y-3">
     <span className="font-mono text-xs tracking-[0.2em] text-cyber-cyan">
@@ -675,14 +708,13 @@ ${ticket.desc || 'Quiero recibir más información.'}
     </span>
 
     <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-white">
-      Quién está detrás de Orbidev
+      Tecnología con acompañamiento directo
     </h2>
 
     <p className="max-w-3xl text-sm sm:text-base text-slate-400 leading-relaxed">
-      Orbidev es un emprendimiento tecnológico creado por Fernando Sierra,
-      desarrollador y estudiante de Tecnologías de la Información en UTEC,
-      con experiencia en desarrollo de proyectos, soporte técnico, bases de
-      datos y creación de soluciones digitales adaptadas a necesidades reales.
+      Orbidev desarrolla soluciones digitales para empresas que necesitan
+      mejorar su presencia, ordenar procesos o transformar tareas manuales en
+      herramientas claras y sostenibles.
     </p>
   </div>
 
@@ -702,11 +734,11 @@ ${ticket.desc || 'Quiero recibir más información.'}
         <div className="space-y-4">
           <div>
             <h3 className="font-display text-xl text-white">
-              Fernando Sierra
+              ORBIDEV
             </h3>
 
             <p className="mt-1 font-mono text-xs text-cyber-cyan">
-              DESARROLLO · SOPORTE · SOLUCIONES DIGITALES
+              DESARROLLO · DATOS · SOLUCIONES DIGITALES
             </p>
           </div>
 
@@ -763,12 +795,12 @@ ${ticket.desc || 'Quiero recibir más información.'}
 
           <div>
             <h3 className="font-display text-sm text-white">
-              Experiencia en soporte
+              Análisis y acompañamiento
             </h3>
 
             <p className="mt-2 text-sm text-slate-400 leading-relaxed">
-              Análisis de incidencias, diagnóstico de problemas y acompañamiento
-              técnico a usuarios.
+              Relevamiento de necesidades, diagnóstico y seguimiento durante la
+              implementación.
             </p>
           </div>
         </div>
@@ -786,8 +818,8 @@ ${ticket.desc || 'Quiero recibir más información.'}
             </h3>
 
             <p className="mt-2 text-sm text-slate-400 leading-relaxed">
-              Experiencia con React, Java, Spring Boot, Firebase, Supabase,
-              PostgreSQL y automatización de datos.
+              Tecnologías elegidas según el alcance: web, backend, datos,
+              integraciones y despliegue.
             </p>
           </div>
         </div>
@@ -856,31 +888,64 @@ ${ticket.desc || 'Quiero recibir más información.'}
               <div className="space-y-2">
                 <div className="space-y-3">
             <span className="text-xs font-mono tracking-[0.2em] text-cyber-cyan">
-            // PROYECTOS Y DESARROLLOS
+            // PRODUCTOS Y PROYECTOS
            </span>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
-    Soluciones construidas con tecnología real
+    Productos propios y desarrollos técnicos
           </h1>
 
           <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-3xl">
-    Estos proyectos muestran algunas de las tecnologías y capacidades que
-    podemos aplicar para desarrollar soluciones web, automatizaciones y
-    sistemas de gestión.
+    Presentamos por separado los productos de Orbidev y los proyectos técnicos
+    que demuestran capacidades concretas, con tecnologías verificadas en cada
+    repositorio.
            </p>
         </div>
       </div>
 
+              <section className="relative overflow-hidden bg-cyber-dark/50 border border-cyber-purple/40 rounded-2xl p-5 sm:p-7">
+                <div className="absolute -right-16 -top-16 w-48 h-48 bg-cyber-purple/15 rounded-full blur-3xl"></div>
+                <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+                  <div className="space-y-3 max-w-2xl">
+                    <span className="inline-flex items-center gap-2 text-[10px] font-mono tracking-[0.18em] text-cyber-emerald">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyber-emerald animate-pulse"></span>
+                      PRODUCTO ORBIDEV · PILOTO
+                    </span>
+                    <h2 className="text-2xl sm:text-3xl font-display font-bold">ORBIDEV Reserva</h2>
+                    <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
+                      Gestión de reservas pensada para comercios y profesionales que quieren ordenar su agenda y ofrecer turnos online. Estamos preparando el piloto con cupos limitados.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => startContact('reserva')}
+                    className="bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0"
+                  >
+                    <i className="fa-regular fa-calendar-check"></i>
+                    CONSULTAR POR EL PILOTO
+                  </button>
+                </div>
+              </section>
+
+              <div className="space-y-2 border-l-2 border-cyber-cyan pl-4">
+                <h2 className="orbidev-section-title text-lg sm:text-xl font-display font-bold uppercase tracking-wide">
+                  Proyectos técnicos
+                </h2>
+                <p className="text-sm text-slate-300">Implementaciones reales para explorar arquitectura, datos, automatización y soporte.</p>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4 sm:gap-6">
                 {projectsData.map((project) => (
-                  <div 
+                  <button
+                    type="button"
                     key={project.id}
                     onClick={() => setSelectedProject(project)}
-                    className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-cyan rounded-xl p-5 sm:p-6 transition-all duration-300 cursor-pointer flex flex-col justify-between group h-64 shadow-md hover:shadow-cyan-500/5"
+                    aria-label={`Ver detalles de ${project.title}`}
+                    className="w-full text-left bg-cyber-dark/40 border border-cyber-border hover:border-cyber-cyan rounded-xl p-5 sm:p-6 transition-all duration-300 cursor-pointer flex flex-col justify-between group min-h-64 shadow-md hover:shadow-cyan-500/5"
                   >
                     <div>
                       <div className="flex items-center justify-between mb-3 sm:mb-4">
-                        <span className="text-[10px] sm:text-xs font-mono text-slate-500">{project.tag}</span>
+                        <span className="text-[10px] sm:text-xs font-mono text-slate-500 pr-3 leading-relaxed">{project.tag}</span>
                         <i className={`fa-solid ${project.icon} ${project.color} text-lg sm:text-xl group-hover:scale-110 transition-transform`}></i>
                       </div>
                       <h3 className="text-lg sm:text-xl font-bold group-hover:text-cyber-cyan transition-colors mb-2">{project.title}</h3>
@@ -889,7 +954,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
                     <span className="text-xs font-mono text-cyber-cyan flex items-center gap-1.5 mt-4">
                       VER DETALLE <i className="fa-solid fa-angle-right"></i>
                     </span>
-                  </div>
+                  </button>
                 ))}
               </div>
 
@@ -902,27 +967,27 @@ ${ticket.desc || 'Quiero recibir más información.'}
   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 text-center">
     <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-cyber-cyan/50 transition-all">
       <i className="fa-brands fa-react text-3xl text-cyber-cyan mb-3"></i>
-      <p className="text-xs font-mono font-bold">React</p>
+      <p className="text-xs font-mono font-bold">React + Vite</p>
     </div>
 
     <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-orange-400/50 transition-all">
       <i className="fa-brands fa-java text-3xl text-orange-400 mb-3"></i>
-      <p className="text-xs font-mono font-bold">Java</p>
+      <p className="text-xs font-mono font-bold">Java 21</p>
     </div>
 
     <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-cyber-emerald/50 transition-all">
       <i className="fa-solid fa-leaf text-3xl text-cyber-emerald mb-3"></i>
-      <p className="text-xs font-mono font-bold">Spring Boot</p>
+      <p className="text-xs font-mono font-bold">Spring Boot 3.5</p>
     </div>
 
     <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-cyber-emerald/50 transition-all">
-      <i className="fa-solid fa-bolt text-3xl text-cyber-emerald mb-3"></i>
-      <p className="text-xs font-mono font-bold">Supabase</p>
+      <i className="fa-brands fa-python text-3xl text-cyber-emerald mb-3"></i>
+      <p className="text-xs font-mono font-bold">Python + pandas</p>
     </div>
 
     <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-cyber-purple/50 transition-all">
-      <i className="fa-solid fa-cloud-arrow-up text-3xl text-cyber-purple mb-3"></i>
-      <p className="text-xs font-mono font-bold">Render</p>
+      <i className="fa-solid fa-gears text-3xl text-cyber-purple mb-3"></i>
+      <p className="text-xs font-mono font-bold">SQLAlchemy</p>
     </div>
 
     <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-cyber-blue/50 transition-all">
@@ -932,12 +997,12 @@ ${ticket.desc || 'Quiero recibir más información.'}
 
     <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-amber-400/50 transition-all">
       <i className="fa-solid fa-fire text-3xl text-amber-400 mb-3"></i>
-      <p className="text-xs font-mono font-bold">Firebase</p>
+      <p className="text-xs font-mono font-bold">Firebase Hosting</p>
     </div>
 
     <div className="p-4 bg-cyber-dark/40 border border-cyber-border rounded-lg flex flex-col items-center hover:border-yellow-300/50 transition-all">
-      <i className="fa-brands fa-python text-3xl text-yellow-300 mb-3"></i>
-      <p className="text-xs font-mono font-bold">Python</p>
+      <i className="fa-solid fa-cloud-arrow-up text-3xl text-yellow-300 mb-3"></i>
+      <p className="text-xs font-mono font-bold">Render + Supabase</p>
     </div>
   </div>
 </div>
@@ -1146,7 +1211,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
       </div>
 
       {formState.succeeded ? (
-        <div className="bg-cyber-emerald/10 border border-cyber-emerald/30 p-6 sm:p-8 rounded-xl space-y-4 text-center flex flex-col justify-center min-h-96">
+        <div role="status" aria-live="polite" className="bg-cyber-emerald/10 border border-cyber-emerald/30 p-6 sm:p-8 rounded-xl space-y-4 text-center flex flex-col justify-center min-h-96">
           <i className="fa-solid fa-circle-check text-5xl text-cyber-emerald"></i>
 
           <h2 className="text-xl sm:text-2xl font-bold text-cyber-emerald">
@@ -1158,6 +1223,23 @@ ${ticket.desc || 'Quiero recibir más información.'}
             pondremos en contacto contigo.
           </p>
 
+          <div className="flex flex-col sm:flex-row justify-center gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigateTo('inicio')}
+              className="bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono px-5 py-3 rounded-lg text-sm transition-all cursor-pointer"
+            >
+              VOLVER AL INICIO
+            </button>
+            <button
+              type="button"
+              onClick={resetContactForm}
+              className="border border-cyber-cyan/50 hover:border-cyber-cyan text-cyber-cyan font-mono px-5 py-3 rounded-lg text-sm transition-all cursor-pointer"
+            >
+              ENVIAR OTRA CONSULTA
+            </button>
+          </div>
+
           <div className="text-[10px] text-slate-500 font-mono">
             STATUS: CONSULTA_RECIBIDA
           </div>
@@ -1167,35 +1249,66 @@ ${ticket.desc || 'Quiero recibir más información.'}
           onSubmit={handleFormSubmit}
           className="space-y-5 bg-cyber-dark/40 border border-cyber-border p-5 sm:p-8 rounded-xl"
         >
+          <input
+            type="hidden"
+            name="_subject"
+            value={`Nueva consulta ORBIDEV · ${serviceLabels[ticket.tipo] || 'Consulta general'}`}
+          />
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label
                 htmlFor="contact-name"
                 className="text-xs font-mono text-slate-400"
               >
-                Nombre o empresa
+                Nombre
               </label>
 
               <input
                 id="contact-name"
-                name="name"
+                name="Nombre"
                 type="text"
                 required
                 value={ticket.name}
                 onChange={(e) =>
                   setTicket({ ...ticket, name: e.target.value })
                 }
-                placeholder="Ej: Comercio del Centro"
+                placeholder="Ej: Valentina"
+                autoComplete="name"
                 className="w-full bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyber-cyan"
               />
                     <ValidationError
                         prefix="Nombre"
-                        field="name"
+                        field="Nombre"
                          errors={formState.errors}
                        className="text-xs text-red-400 mt-1"
                     />
             </div>
 
+            <div className="space-y-1.5">
+              <label
+                htmlFor="contact-company"
+                className="text-xs font-mono text-slate-400"
+              >
+                Empresa <span className="text-slate-600">(opcional)</span>
+              </label>
+
+              <input
+                id="contact-company"
+                name="Empresa"
+                type="text"
+                value={ticket.company}
+                onChange={(e) =>
+                  setTicket({ ...ticket, company: e.target.value })
+                }
+                placeholder="Ej: Comercio del Centro"
+                autoComplete="organization"
+                className="w-full bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyber-cyan"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label
                 htmlFor="contact-email"
@@ -1210,6 +1323,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
                 name="email"
                 required
                 value={ticket.email}
+                autoComplete="email"
                 onChange={(e) =>
                   setTicket({ ...ticket, email: e.target.value })
                 }
@@ -1223,9 +1337,8 @@ ${ticket.desc || 'Quiero recibir más información.'}
                         className="text-xs text-red-400 mt-1"
                       />
             </div>
-          </div>
 
-          <div className="space-y-1.5">
+            <div className="space-y-1.5">
             <label
               htmlFor="contact-service"
               className="text-xs font-mono text-slate-400"
@@ -1235,13 +1348,16 @@ ${ticket.desc || 'Quiero recibir más información.'}
 
             <select
               id="contact-service"
-              name="service"
               value={ticket.tipo}
               onChange={(e) =>
                 setTicket({ ...ticket, tipo: e.target.value })
               }
               className="w-full bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyber-cyan"
             >
+              <option value="reserva">
+                ORBIDEV Reserva — piloto
+              </option>
+
               <option value="landing">
                 Sitio web o landing page
               </option>
@@ -1266,6 +1382,12 @@ ${ticket.desc || 'Quiero recibir más información.'}
                 Otra consulta
               </option>
             </select>
+            <input
+              type="hidden"
+              name="Servicio"
+              value={serviceLabels[ticket.tipo] || 'Consulta general'}
+            />
+            </div>
           </div>
 
           <div className="space-y-1.5">
@@ -1278,7 +1400,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
 
             <textarea
               id="contact-description"
-              name="message"
+              name="Mensaje"
               rows="5"
               required
               value={ticket.desc}
@@ -1290,11 +1412,20 @@ ${ticket.desc || 'Quiero recibir más información.'}
             ></textarea>
               <ValidationError
                 prefix="Mensaje"
-                field="message"
+                field="Mensaje"
                 errors={formState.errors}
                 className="text-xs text-red-400 mt-1"
               />
           </div>
+
+          <input type="hidden" name="Origen" value="https://orbidev.uy/contacto" />
+          <input type="text" name="_gotcha" className="hidden" tabIndex="-1" autoComplete="off" />
+
+          <ValidationError
+            prefix="No pudimos enviar la consulta"
+            errors={formState.errors}
+            className="text-sm text-red-400"
+          />
 
           <button
             type="submit"
@@ -1414,14 +1545,24 @@ ${ticket.desc || 'Quiero recibir más información.'}
           MODAL DE DETALLE DE PROYECTO
       ============================================================= */}
       {selectedProject && (
-        <div className="absolute inset-0 bg-cyber-dark/80 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <div className="bg-cyber-panel border border-cyber-border w-full max-w-lg rounded-xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+        <div
+          className="absolute inset-0 bg-cyber-dark/80 backdrop-blur-xs z-50 flex items-center justify-center p-4"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) setSelectedProject(null);
+          }}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-modal-title"
+            className="bg-cyber-panel border border-cyber-border w-full max-w-lg rounded-xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]"
+          >
             <div className="bg-cyber-dark px-4 sm:px-6 py-3 sm:py-4 border-b border-cyber-border flex justify-between items-center shrink-0">
               <div className="flex items-center gap-2">
                 <i className="fa-solid fa-folder-open text-cyber-cyan text-sm"></i>
                 <span className="font-mono text-[10px] sm:text-xs text-slate-400 truncate max-w-50">{selectedProject.title.toUpperCase()}</span>
               </div>
-              <button onClick={() => setSelectedProject(null)} className="text-slate-400 hover:text-white cursor-pointer p-1">
+              <button aria-label="Cerrar detalle" onClick={() => setSelectedProject(null)} className="text-slate-400 hover:text-white cursor-pointer p-1">
                 <i className="fa-solid fa-times"></i>
               </button>
             </div>
@@ -1430,7 +1571,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
               <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono text-cyber-purple">
                 <span className="px-2 py-0.5 bg-cyber-purple/10 border border-cyber-purple/20 rounded">STACK: {selectedProject.tag}</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-100">{selectedProject.title}</h3>
+              <h3 id="project-modal-title" className="text-xl sm:text-2xl font-bold text-slate-100">{selectedProject.title}</h3>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">{selectedProject.longDesc}</p>
             </div>
 
@@ -1456,13 +1597,60 @@ ${ticket.desc || 'Quiero recibir más información.'}
         </div>
       )}
 
+      {showAnalyticsConsent && isAnalyticsConfigured && (
+        <div
+          role="dialog"
+          aria-label="Preferencias de medición"
+          className="fixed z-50 left-4 right-4 bottom-12 sm:left-auto sm:right-6 sm:w-110 bg-cyber-dark/98 border border-cyber-cyan/40 rounded-xl p-5 shadow-2xl shadow-cyber-cyan/10 backdrop-blur-md"
+        >
+          <div className="flex items-start gap-3">
+            <div className="w-9 h-9 shrink-0 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center text-cyber-cyan">
+              <i className="fa-solid fa-chart-line"></i>
+            </div>
+            <div className="space-y-2">
+              <h2 className="font-bold text-white">Medición para mejorar Orbidev</h2>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                Podemos usar Google Analytics para entender qué secciones se visitan y mejorar el sitio. La publicidad permanece desactivada.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row justify-end gap-2 mt-4">
+            <button
+              type="button"
+              onClick={() => handleAnalyticsChoice('denied')}
+              className="border border-cyber-border hover:border-slate-400 text-slate-300 font-mono text-xs px-4 py-2.5 rounded-lg transition-all cursor-pointer"
+            >
+              AHORA NO
+            </button>
+            <button
+              type="button"
+              onClick={() => handleAnalyticsChoice('granted')}
+              className="bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono text-xs px-4 py-2.5 rounded-lg transition-all cursor-pointer"
+            >
+              ACEPTAR MEDICIÓN
+            </button>
+          </div>
+        </div>
+      )}
+
             {/* ============================================================
           BARRA DE ESTADO INFERIOR
       ============================================================= */}
       <div className="h-8 bg-cyber-dark border-t border-cyber-border px-4 md:px-6 flex items-center justify-between z-40 text-[9px] sm:text-[10px] font-mono text-slate-500 shrink-0">
-        <span className="truncate">STATUS: OPERATIONAL</span>
+        <div className="flex items-center gap-3 truncate">
+          <span className="truncate">STATUS: OPERATIONAL</span>
+          {isAnalyticsConfigured && (
+            <button
+              type="button"
+              onClick={() => setShowAnalyticsConsent(true)}
+              className="hover:text-cyber-cyan transition-colors cursor-pointer"
+            >
+              PRIVACIDAD
+            </button>
+          )}
+        </div>
         <div className="flex gap-2 sm:gap-4 truncate">
-          <span className="hidden xs:inline">UTEC_SEMESTER: 4/4</span>
+          <span className="hidden xs:inline">DOMAIN: ORBIDEV.UY</span>
           <span>ENV: PRODUCTION</span>
         </div>
       </div>

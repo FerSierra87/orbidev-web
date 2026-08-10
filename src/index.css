@@ -50,6 +50,11 @@ select {
   font: inherit;
 }
 
+:focus-visible {
+  outline: 2px solid var(--color-cyber-cyan);
+  outline-offset: 3px;
+}
+
 /* =====================================================
    SELECCIÓN DE TEXTO
    ===================================================== */
@@ -113,6 +118,20 @@ select {
   animation: neonGlow 3s ease-in-out infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 .orbidev-gradient-text {
   background: linear-gradient(
     90deg,
@@ -138,4 +157,9 @@ select {
     linear-gradient(90deg, rgba(0, 231, 240, 0.035) 1px, transparent 1px);
 
   background-size: 32px 32px;
+}
+
+.orbidev-section-title {
+  color: var(--color-cyber-cyan);
+  text-shadow: 0 0 14px rgba(0, 231, 240, 0.35);
 }
