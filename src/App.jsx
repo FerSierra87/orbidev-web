@@ -497,10 +497,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
             <div className="p-4 sm:p-6 md:p-10 xl:pr-76 space-y-10 md:space-y-16 max-w-7xl">
               
              {/* Presentación / Hero */}
-          <div className="relative isolate overflow-hidden rounded-2xl -m-4 p-4 sm:-m-6 sm:p-6 md:-m-10 md:p-10 min-h-[480px] sm:min-h-[560px] md:min-h-[620px] flex flex-col justify-center space-y-4 md:space-y-6">
-            <Suspense fallback={null}>
-              <BlackHoleHero className="-z-10 left-0 right-0 opacity-45 sm:left-1/4 sm:opacity-60 md:left-auto md:right-[-8%] md:w-2/3 md:opacity-90" />
-            </Suspense>
+          <div className="space-y-4 md:space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyber-emerald/10 border border-cyber-emerald/20 rounded-full text-[10px] sm:text-xs font-mono text-cyber-emerald max-w-full">
              <span className="w-1.5 h-1.5 bg-cyber-emerald rounded-full animate-pulse shrink-0"></span>
 
@@ -550,6 +547,14 @@ ${ticket.desc || 'Quiero recibir más información.'}
       <i className="fa-solid fa-layer-group text-xs"></i>
       Ver proyectos
     </button>
+  </div>
+
+  {/* Visual del hero: panel contenido en su propio bloque, después
+      del título y los botones - no se superpone al texto. */}
+  <div className="relative isolate overflow-hidden rounded-2xl border border-cyber-border h-56 sm:h-72 md:h-[420px] mt-2">
+    <Suspense fallback={null}>
+      <BlackHoleHero />
+    </Suspense>
   </div>
 </div>
 

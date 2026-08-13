@@ -302,7 +302,7 @@ export default function BlackHoleHero({ className = "" }) {
     <div
       ref={mountRef}
       aria-hidden="true"
-      className={`pointer-events-none absolute top-0 bottom-0 overflow-hidden ${className}`}
+      className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
     />
   );
 }
