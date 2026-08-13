@@ -2,7 +2,7 @@
 // DEPENDENCIAS
 // ============================================================
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -13,6 +13,11 @@ import {
   saveAnalyticsConsent,
   trackPageView,
 } from './analytics.js';
+
+// Carga diferida: Three.js/GSAP pesan ~260kB gzip, no deben bloquear el
+// render inicial de la página. Se baja en segundo plano después del
+// primer paint; hasta entonces el fondo cyber existente queda tal cual.
+const BlackHoleHero = lazy(() => import('./BlackHoleHero.jsx'));
 
 const initialTicket = {
   name: '',
@@ -492,7 +497,10 @@ ${ticket.desc || 'Quiero recibir más información.'}
             <div className="p-4 sm:p-6 md:p-10 xl:pr-76 space-y-10 md:space-y-16 max-w-7xl">
               
              {/* Presentación / Hero */}
-          <div className="space-y-4 md:space-y-6">
+          <div className="relative isolate overflow-hidden rounded-2xl -m-4 p-4 sm:-m-6 sm:p-6 md:-m-10 md:p-10 min-h-[480px] sm:min-h-[560px] md:min-h-[620px] flex flex-col justify-center space-y-4 md:space-y-6">
+            <Suspense fallback={null}>
+              <BlackHoleHero className="-z-10 left-0 right-0 opacity-45 sm:left-1/4 sm:opacity-60 md:left-auto md:right-[-8%] md:w-2/3 md:opacity-90" />
+            </Suspense>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyber-emerald/10 border border-cyber-emerald/20 rounded-full text-[10px] sm:text-xs font-mono text-cyber-emerald max-w-full">
              <span className="w-1.5 h-1.5 bg-cyber-emerald rounded-full animate-pulse shrink-0"></span>
 
