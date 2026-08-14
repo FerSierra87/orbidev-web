@@ -2,7 +2,7 @@
 // DEPENDENCIAS
 // ============================================================
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -13,6 +13,11 @@ import {
   saveAnalyticsConsent,
   trackPageView,
 } from './analytics.js';
+
+// Carga diferida: Three.js/GSAP pesan ~260kB gzip, no deben bloquear el
+// render inicial de la página. Se baja en segundo plano después del
+// primer paint; hasta entonces el fondo cyber existente queda tal cual.
+const BlackHoleHero = lazy(() => import('./BlackHoleHero.jsx'));
 
 const initialTicket = {
   name: '',
@@ -542,6 +547,14 @@ ${ticket.desc || 'Quiero recibir más información.'}
       <i className="fa-solid fa-layer-group text-xs"></i>
       Ver proyectos
     </button>
+  </div>
+
+  {/* Visual del hero: panel contenido en su propio bloque, después
+      del título y los botones - no se superpone al texto. */}
+  <div className="relative isolate overflow-hidden rounded-2xl border border-cyber-border h-56 sm:h-72 md:h-[420px] mt-2">
+    <Suspense fallback={null}>
+      <BlackHoleHero />
+    </Suspense>
   </div>
 </div>
 
