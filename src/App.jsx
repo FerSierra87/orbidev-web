@@ -90,6 +90,9 @@ export default function App() {
   // Estado para controlar qué proyecto está abierto en el modal de detalles
   const [selectedProject, setSelectedProject] = useState(null);
 
+  // Estado para la pregunta frecuente abierta (acordeón, solo una a la vez)
+  const [openFaq, setOpenFaq] = useState(null);
+
   const [analyticsConsent, setAnalyticsConsent] = useState(
     getStoredAnalyticsConsent,
   );
@@ -279,6 +282,48 @@ export default function App() {
     datos: 'Datos e integraciones',
     otro: 'Otra consulta',
   };
+
+  // ============================================================
+  // PREGUNTAS FRECUENTES
+  // ============================================================
+
+  const faqData = [
+    {
+      question: '¿Qué es Orbidev y qué hace?',
+      answer:
+        'Somos un estudio de desarrollo que diseña y construye soluciones digitales para empresas: sitios web, tiendas online, sistemas a medida y automatizaciones. Nos encargamos de todo el proceso, desde entender el problema hasta dejar la solución funcionando.',
+    },
+    {
+      question: '¿Para qué tipo de empresas es esto?',
+      answer:
+        'Trabajamos principalmente con pequeñas y medianas empresas, comercios y emprendimientos que necesitan una presencia digital profesional o quieren automatizar procesos que hoy hacen a mano o con planillas.',
+    },
+    {
+      question: '¿Cómo es el proceso de trabajo?',
+      answer:
+        'Primero entendemos qué necesita tu empresa en una conversación inicial. Después proponemos una solución concreta, con alcance y tiempos claros, y avanzamos por etapas para que puedas ver resultados desde el principio.',
+    },
+    {
+      question: '¿Cuánto tiempo tarda un proyecto?',
+      answer:
+        'Depende del alcance: un sitio web puede estar listo en pocas semanas, mientras que un sistema a medida con varias funcionalidades lleva más tiempo. En la primera conversación te damos una estimación realista.',
+    },
+    {
+      question: '¿Qué pasa después de que el sitio o sistema esté funcionando?',
+      answer:
+        'Ofrecemos acompañamiento y mantenimiento posterior al lanzamiento: correcciones, mejoras y soporte técnico para que la solución siga funcionando bien a medida que tu empresa crece.',
+    },
+    {
+      question: '¿Necesito saber de tecnología para trabajar con ustedes?',
+      answer:
+        'No. Explicamos cada propuesta en términos simples, sin tecnicismos innecesarios, y te acompañamos en cada paso para que entiendas qué estás recibiendo.',
+    },
+    {
+      question: '¿Cuánto cuesta?',
+      answer:
+        'Varía según el proyecto: no es lo mismo una landing page que un sistema completo. Preferimos conversar primero para entender qué necesitás y así darte un presupuesto ajustado a tu realidad, no un número genérico.',
+    },
+  ];
 
   const openWhatsApp = () => {
 
@@ -475,10 +520,33 @@ ${ticket.desc || 'Quiero recibir más información.'}
   <i className="fa-solid fa-envelope text-xs"></i>
   <span>04_CONTACTO</span>
 </NavLink>
-          
+
           </div>
 
-          
+          {/* Redes sociales */}
+          <div className="space-y-2 pb-1">
+            <span className="text-[10px] font-mono tracking-widest text-slate-500 block px-3 mb-2">SEGUINOS</span>
+            <div className="flex items-center gap-2 px-3">
+              <a
+                href="https://instagram.com/orbidev.uy"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Orbidev en Instagram"
+                className="w-9 h-9 rounded-lg bg-slate-800/40 border border-cyber-border hover:border-cyber-purple/60 hover:text-cyber-purple text-slate-400 flex items-center justify-center transition-all"
+              >
+                <i className="fa-brands fa-instagram"></i>
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61592589158058"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Orbidev en Facebook"
+                className="w-9 h-9 rounded-lg bg-slate-800/40 border border-cyber-border hover:border-cyber-blue/60 hover:text-cyber-blue text-slate-400 flex items-center justify-center transition-all"
+              >
+                <i className="fa-brands fa-facebook-f"></i>
+              </a>
+            </div>
+          </div>
         </div>
 
                   {/* =========================================================
@@ -1133,6 +1201,53 @@ ${ticket.desc || 'Quiero recibir más información.'}
           siga funcionando correctamente.
         </p>
       </article>
+    </div>
+
+            {/* =========================================================
+              SECCIÓN: PREGUNTAS FRECUENTES
+          ========================================================== */}
+    <div className="space-y-5">
+      <div className="space-y-3">
+        <span className="text-xs font-mono tracking-[0.2em] text-cyber-cyan">
+          // PREGUNTAS FRECUENTES
+        </span>
+
+        <h2 className="text-2xl sm:text-3xl font-display font-bold">
+          ¿Qué es Orbidev y para qué sirve?
+        </h2>
+      </div>
+
+      <div className="border border-cyber-border rounded-xl divide-y divide-cyber-border overflow-hidden">
+        {faqData.map((item, index) => {
+          const isOpen = openFaq === index;
+          return (
+            <div key={item.question} className="bg-cyber-dark/40">
+              <button
+                type="button"
+                onClick={() => setOpenFaq(isOpen ? null : index)}
+                aria-expanded={isOpen}
+                className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left cursor-pointer hover:bg-cyber-dark/60 transition-all"
+              >
+                <span className="font-semibold text-sm sm:text-base">
+                  {item.question}
+                </span>
+
+                <i
+                  className={`fa-solid fa-chevron-down text-cyber-cyan text-xs shrink-0 transition-transform duration-200 ${
+                    isOpen ? 'rotate-180' : ''
+                  }`}
+                ></i>
+              </button>
+
+              {isOpen && (
+                <p className="px-5 pb-4 text-sm text-slate-400 leading-relaxed">
+                  {item.answer}
+                </p>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
 
     <div className="bg-linear-to-r from-cyber-purple/10 via-cyber-blue/10 to-cyber-cyan/10 border border-cyber-border rounded-xl p-5 sm:p-7 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
