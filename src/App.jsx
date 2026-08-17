@@ -670,11 +670,11 @@ ${ticket.desc || 'Quiero recibir más información.'}
 
   <div className="flex flex-col sm:flex-row gap-3 pt-2">
     <button
-      onClick={() => startContact('reserva')}
+      onClick={() => navigateTo('plataforma')}
       className="bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg shadow-cyber-purple/20 text-sm"
     >
-      <i className="fa-regular fa-calendar-check text-xs"></i>
-      Conocé ORBIDEV Reserva
+      <i className="fa-solid fa-cubes text-xs"></i>
+      Conocé ORBIDEV Core
     </button>
 
     <button
@@ -1345,21 +1345,178 @@ ${ticket.desc || 'Quiero recibir más información.'}
           ========================================================== */}
 {activeTab === 'plataforma' && (
   <div className="p-4 sm:p-6 md:p-10 space-y-8 md:space-y-10 max-w-6xl">
-    <div className="space-y-3">
-      <span className="text-xs font-mono tracking-[0.2em] text-cyber-cyan">
-        // ORBIDEV CORE
-      </span>
+    <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-8 lg:gap-6 items-center">
+      <div className="space-y-3">
+        <span className="text-xs font-mono tracking-[0.2em] text-cyber-cyan">
+          // ORBIDEV CORE
+        </span>
 
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
-        Un solo acceso para todo tu negocio digital
-      </h1>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
+          Un solo acceso para todo tu negocio digital
+        </h1>
 
-      <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-3xl">
-        ORBIDEV Core es la plataforma que centraliza la identidad, los
-        usuarios y las suscripciones de tu empresa, y te da acceso a los
-        módulos que necesites: agenda, catálogo, automatizaciones, bandeja de
-        mensajes y métricas. Un solo login, un ecosistema conectado.
-      </p>
+        <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-3xl">
+          ORBIDEV Core es la plataforma que centraliza la identidad, los
+          usuarios y las suscripciones de tu empresa, y te da acceso a los
+          módulos que necesites: agenda, catálogo, automatizaciones, bandeja de
+          mensajes y métricas. Un solo login, un ecosistema conectado.
+        </p>
+      </div>
+
+      {/* Diagrama orbital: los módulos giran alrededor de Core, en línea
+          con el nombre ORBIDEV. Es SVG propio (sin imágenes externas) para
+          mantener consistencia visual con el resto del sitio. */}
+      <div className="relative mx-auto w-full max-w-sm lg:max-w-none">
+        <svg
+          viewBox="0 0 600 600"
+          className="w-full h-auto"
+          role="img"
+          aria-label="Diagrama de ORBIDEV Core con sus módulos Reserva, Catálogo, Flow, Inbox y Pulse orbitando alrededor"
+        >
+          <defs>
+            <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#22d3ee" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+
+          <circle cx="300" cy="300" r="140" fill="url(#coreGlow)">
+            <animate attributeName="r" values="130;150;130" dur="4s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite" />
+          </circle>
+
+          <g stroke="currentColor" className="text-cyber-border" fill="none" strokeWidth="1" strokeDasharray="2 6">
+            <circle cx="300" cy="300" r="220">
+              <animateTransform attributeName="transform" type="rotate" from="0 300 300" to="360 300 300" dur="90s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="300" cy="300" r="150" opacity="0.6">
+              <animateTransform attributeName="transform" type="rotate" from="360 300 300" to="0 300 300" dur="70s" repeatCount="indefinite" />
+            </circle>
+          </g>
+
+          <line x1="300" y1="300" x2="300" y2="80" stroke="#a78bfa" strokeWidth="1.5" strokeOpacity="0.5" strokeDasharray="4 4">
+            <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="1.6s" repeatCount="indefinite" />
+          </line>
+          <line x1="300" y1="300" x2="509" y2="232" stroke="#60a5fa" strokeWidth="1.5" strokeOpacity="0.5" strokeDasharray="4 4">
+            <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="1.6s" repeatCount="indefinite" />
+          </line>
+          <line x1="300" y1="300" x2="429" y2="478" stroke="#34d399" strokeWidth="1.5" strokeOpacity="0.5" strokeDasharray="4 4">
+            <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="1.6s" repeatCount="indefinite" />
+          </line>
+          <line x1="300" y1="300" x2="171" y2="478" stroke="#22d3ee" strokeWidth="1.5" strokeOpacity="0.5" strokeDasharray="4 4">
+            <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="1.6s" repeatCount="indefinite" />
+          </line>
+          <line x1="300" y1="300" x2="91" y2="232" stroke="#a78bfa" strokeWidth="1.5" strokeOpacity="0.5" strokeDasharray="4 4">
+            <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="1.6s" repeatCount="indefinite" />
+          </line>
+
+          {/* Partículas viajando del Core a cada módulo */}
+          <circle r="4" fill="#a78bfa">
+            <animateMotion path="M300,300 L300,80" dur="2.2s" repeatCount="indefinite" begin="0s" />
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="2.2s" repeatCount="indefinite" begin="0s" />
+          </circle>
+          <circle r="4" fill="#60a5fa">
+            <animateMotion path="M300,300 L509,232" dur="2.2s" repeatCount="indefinite" begin="0.4s" />
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="2.2s" repeatCount="indefinite" begin="0.4s" />
+          </circle>
+          <circle r="4" fill="#34d399">
+            <animateMotion path="M300,300 L429,478" dur="2.2s" repeatCount="indefinite" begin="0.8s" />
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="2.2s" repeatCount="indefinite" begin="0.8s" />
+          </circle>
+          <circle r="4" fill="#22d3ee">
+            <animateMotion path="M300,300 L171,478" dur="2.2s" repeatCount="indefinite" begin="1.2s" />
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="2.2s" repeatCount="indefinite" begin="1.2s" />
+          </circle>
+          <circle r="4" fill="#a78bfa">
+            <animateMotion path="M300,300 L91,232" dur="2.2s" repeatCount="indefinite" begin="1.6s" />
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="2.2s" repeatCount="indefinite" begin="1.6s" />
+          </circle>
+
+          {/* Halos de pulso detrás de cada satélite */}
+          <circle cx="300" cy="80" r="26" fill="#a78bfa" opacity="0.2">
+            <animate attributeName="r" values="26;36;26" dur="3s" repeatCount="indefinite" begin="0s" />
+            <animate attributeName="opacity" values="0.25;0.05;0.25" dur="3s" repeatCount="indefinite" begin="0s" />
+          </circle>
+          <circle cx="509" cy="232" r="26" fill="#60a5fa" opacity="0.2">
+            <animate attributeName="r" values="26;36;26" dur="3s" repeatCount="indefinite" begin="0.5s" />
+            <animate attributeName="opacity" values="0.25;0.05;0.25" dur="3s" repeatCount="indefinite" begin="0.5s" />
+          </circle>
+          <circle cx="429" cy="478" r="26" fill="#34d399" opacity="0.2">
+            <animate attributeName="r" values="26;36;26" dur="3s" repeatCount="indefinite" begin="1s" />
+            <animate attributeName="opacity" values="0.25;0.05;0.25" dur="3s" repeatCount="indefinite" begin="1s" />
+          </circle>
+          <circle cx="171" cy="478" r="26" fill="#22d3ee" opacity="0.2">
+            <animate attributeName="r" values="26;36;26" dur="3s" repeatCount="indefinite" begin="1.5s" />
+            <animate attributeName="opacity" values="0.25;0.05;0.25" dur="3s" repeatCount="indefinite" begin="1.5s" />
+          </circle>
+          <circle cx="91" cy="232" r="26" fill="#a78bfa" opacity="0.2">
+            <animate attributeName="r" values="26;36;26" dur="3s" repeatCount="indefinite" begin="2s" />
+            <animate attributeName="opacity" values="0.25;0.05;0.25" dur="3s" repeatCount="indefinite" begin="2s" />
+          </circle>
+
+          {/* Nodo central: ORBIDEV Core */}
+          <foreignObject x="225" y="225" width="150" height="150">
+            <div className="w-full h-full flex flex-col items-center justify-center gap-1.5">
+              <div className="w-16 h-16 rounded-xl bg-cyber-dark border border-cyber-cyan/60 shadow-lg shadow-cyber-cyan/20 flex items-center justify-center text-cyber-cyan">
+                <i className="fa-solid fa-shield-halved text-2xl"></i>
+              </div>
+              <span className="text-[11px] font-mono font-bold text-cyber-cyan tracking-wide">
+                ORBIDEV CORE
+              </span>
+            </div>
+          </foreignObject>
+
+          {/* Satélite: Reserva */}
+          <foreignObject x="255" y="20" width="90" height="70">
+            <div className="w-full h-full flex flex-col items-center gap-1">
+              <div className="w-11 h-11 rounded-lg bg-cyber-purple/10 border border-cyber-purple/30 flex items-center justify-center text-cyber-purple shadow-lg shadow-cyber-purple/10">
+                <i className="fa-solid fa-calendar-check"></i>
+              </div>
+              <span className="text-[10px] font-mono text-slate-300 whitespace-nowrap">Reserva</span>
+            </div>
+          </foreignObject>
+
+          {/* Satélite: Catálogo */}
+          <foreignObject x="464" y="197" width="90" height="70">
+            <div className="w-full h-full flex flex-col items-center gap-1">
+              <div className="w-11 h-11 rounded-lg bg-cyber-blue/10 border border-cyber-blue/30 flex items-center justify-center text-cyber-blue shadow-lg shadow-cyber-blue/10">
+                <i className="fa-solid fa-store"></i>
+              </div>
+              <span className="text-[10px] font-mono text-slate-300 whitespace-nowrap">Catálogo</span>
+            </div>
+          </foreignObject>
+
+          {/* Satélite: Flow */}
+          <foreignObject x="384" y="443" width="90" height="70">
+            <div className="w-full h-full flex flex-col items-center gap-1">
+              <div className="w-11 h-11 rounded-lg bg-cyber-emerald/10 border border-cyber-emerald/30 flex items-center justify-center text-cyber-emerald shadow-lg shadow-cyber-emerald/10">
+                <i className="fa-solid fa-bolt"></i>
+              </div>
+              <span className="text-[10px] font-mono text-slate-300 whitespace-nowrap">Flow</span>
+            </div>
+          </foreignObject>
+
+          {/* Satélite: Inbox */}
+          <foreignObject x="126" y="443" width="90" height="70">
+            <div className="w-full h-full flex flex-col items-center gap-1">
+              <div className="w-11 h-11 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/30 flex items-center justify-center text-cyber-cyan shadow-lg shadow-cyber-cyan/10">
+                <i className="fa-solid fa-inbox"></i>
+              </div>
+              <span className="text-[10px] font-mono text-slate-300 whitespace-nowrap">Inbox</span>
+            </div>
+          </foreignObject>
+
+          {/* Satélite: Pulse */}
+          <foreignObject x="46" y="197" width="90" height="70">
+            <div className="w-full h-full flex flex-col items-center gap-1">
+              <div className="w-11 h-11 rounded-lg bg-cyber-purple/10 border border-cyber-purple/30 flex items-center justify-center text-cyber-purple shadow-lg shadow-cyber-purple/10">
+                <i className="fa-solid fa-chart-line"></i>
+              </div>
+              <span className="text-[10px] font-mono text-slate-300 whitespace-nowrap">Pulse</span>
+            </div>
+          </foreignObject>
+        </svg>
+      </div>
     </div>
 
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
