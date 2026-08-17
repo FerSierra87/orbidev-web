@@ -47,6 +47,7 @@ export default function App() {
   const routeToTab = {
     '/': 'inicio',
     '/servicios': 'terminal',
+    '/plataforma': 'plataforma',
     '/proyectos': 'proyectos',
     '/contacto': 'soporte',
   };
@@ -68,6 +69,11 @@ export default function App() {
     title: 'Servicios | Orbidev',
     description:
       'Conocé los servicios de Orbidev: desarrollo web, sistemas a medida, automatización de procesos, tiendas online y consultoría tecnológica.',
+  },
+  '/plataforma': {
+    title: 'ORBIDEV Core | Plataforma SaaS',
+    description:
+      'ORBIDEV Core es la plataforma que centraliza identidad y accesos, con módulos de agenda, catálogo, automatizaciones, mensajería y métricas para tu empresa.',
   },
   '/proyectos': {
     title: 'Proyectos | Orbidev',
@@ -146,6 +152,7 @@ export default function App() {
     const tabToRoute = {
     inicio: '/',
     terminal: '/servicios',
+    plataforma: '/plataforma',
     proyectos: '/proyectos',
     soporte: '/contacto',
     };
@@ -280,6 +287,7 @@ export default function App() {
   // ============================================================
 
   const serviceLabels = {
+    core: 'ORBIDEV Core — quiero una demo',
     reserva: 'ORBIDEV Reserva — piloto',
     landing: 'Sitio web o landing page',
     sistema: 'Sistema a medida',
@@ -516,6 +524,21 @@ ${ticket.desc || 'Quiero recibir más información.'}
 </NavLink>
 
 <NavLink
+  to="/plataforma"
+  onClick={() => setIsSidebarOpen(false)}
+  className={({ isActive }) =>
+    `w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm transition-all ${
+      isActive
+        ? 'bg-cyber-purple/20 text-cyber-cyan border-l-2 border-cyber-cyan'
+        : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'
+    }`
+  }
+>
+  <i className="fa-solid fa-cubes text-xs"></i>
+  <span>03_ORBIDEV_CORE</span>
+</NavLink>
+
+<NavLink
   to="/proyectos"
   onClick={() => setIsSidebarOpen(false)}
   className={({ isActive }) =>
@@ -527,7 +550,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
   }
 >
   <i className="fa-solid fa-briefcase text-xs"></i>
-  <span>03_PROYECTOS</span>
+  <span>04_PROYECTOS</span>
 </NavLink>
 
 <NavLink
@@ -542,7 +565,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
   }
 >
   <i className="fa-solid fa-envelope text-xs"></i>
-  <span>04_CONTACTO</span>
+  <span>05_CONTACTO</span>
 </NavLink>
 
           </div>
@@ -569,7 +592,29 @@ ${ticket.desc || 'Quiero recibir más información.'}
               >
                 <i className="fa-brands fa-facebook-f"></i>
               </a>
+              <a
+                href="https://wa.me/59899452312"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Escribinos por WhatsApp"
+                className="w-9 h-9 rounded-lg bg-slate-800/40 border border-cyber-border hover:border-cyber-emerald/60 hover:text-cyber-emerald text-slate-400 flex items-center justify-center transition-all"
+              >
+                <i className="fa-brands fa-whatsapp"></i>
+              </a>
+              <a
+                href="mailto:hola@orbidev.uy"
+                aria-label="Escribinos a hola@orbidev.uy"
+                className="w-9 h-9 rounded-lg bg-slate-800/40 border border-cyber-border hover:border-cyber-cyan/60 hover:text-cyber-cyan text-slate-400 flex items-center justify-center transition-all"
+              >
+                <i className="fa-solid fa-envelope"></i>
+              </a>
             </div>
+            <a
+              href="mailto:hola@orbidev.uy"
+              className="block px-3 text-[11px] font-mono text-slate-500 hover:text-cyber-cyan transition-colors truncate"
+            >
+              hola@orbidev.uy
+            </a>
           </div>
         </div>
 
@@ -1296,6 +1341,154 @@ ${ticket.desc || 'Quiero recibir más información.'}
   </div>
 )}
             {/* =========================================================
+              SECCIÓN: ORBIDEV CORE (PLATAFORMA)
+          ========================================================== */}
+{activeTab === 'plataforma' && (
+  <div className="p-4 sm:p-6 md:p-10 space-y-8 md:space-y-10 max-w-6xl">
+    <div className="space-y-3">
+      <span className="text-xs font-mono tracking-[0.2em] text-cyber-cyan">
+        // ORBIDEV CORE
+      </span>
+
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
+        Un solo acceso para todo tu negocio digital
+      </h1>
+
+      <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-3xl">
+        ORBIDEV Core es la plataforma que centraliza la identidad, los
+        usuarios y las suscripciones de tu empresa, y te da acceso a los
+        módulos que necesites: agenda, catálogo, automatizaciones, bandeja de
+        mensajes y métricas. Un solo login, un ecosistema conectado.
+      </p>
+    </div>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+      <article className="bg-cyber-dark/40 border border-cyber-cyan/40 rounded-xl p-6 transition-all">
+        <div className="w-11 h-11 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center text-cyber-cyan mb-5">
+          <i className="fa-solid fa-shield-halved text-xl"></i>
+        </div>
+
+        <h2 className="text-lg font-bold mb-2">
+          ORBIDEV Core
+        </h2>
+
+        <p className="text-sm text-slate-400 leading-relaxed">
+          El panel central: gestión de tu empresa, usuarios, roles y accesos a
+          cada producto de la suite, todo desde un mismo lugar.
+        </p>
+      </article>
+
+      <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-purple/60 rounded-xl p-6 transition-all group">
+        <div className="w-11 h-11 rounded-lg bg-cyber-purple/10 border border-cyber-purple/20 flex items-center justify-center text-cyber-purple mb-5">
+          <i className="fa-solid fa-calendar-check text-xl"></i>
+        </div>
+
+        <h2 className="text-lg font-bold mb-2 group-hover:text-cyber-purple transition-colors">
+          Reserva
+        </h2>
+
+        <p className="text-sm text-slate-400 leading-relaxed">
+          Agenda online para que tus clientes reserven turnos o servicios
+          solos, sin llamadas ni mensajes de ida y vuelta.
+        </p>
+      </article>
+
+      <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-blue/60 rounded-xl p-6 transition-all group">
+        <div className="w-11 h-11 rounded-lg bg-cyber-blue/10 border border-cyber-blue/20 flex items-center justify-center text-cyber-blue mb-5">
+          <i className="fa-solid fa-store text-xl"></i>
+        </div>
+
+        <h2 className="text-lg font-bold mb-2 group-hover:text-cyber-blue transition-colors">
+          Catálogo
+        </h2>
+
+        <p className="text-sm text-slate-400 leading-relaxed">
+          Catálogo digital con plantillas por rubro, para mostrar y vender tus
+          productos sin fricción.
+        </p>
+      </article>
+
+      <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-emerald/60 rounded-xl p-6 transition-all group">
+        <div className="w-11 h-11 rounded-lg bg-cyber-emerald/10 border border-cyber-emerald/20 flex items-center justify-center text-cyber-emerald mb-5">
+          <i className="fa-solid fa-bolt text-xl"></i>
+        </div>
+
+        <h2 className="text-lg font-bold mb-2 group-hover:text-cyber-emerald transition-colors">
+          Flow
+        </h2>
+
+        <p className="text-sm text-slate-400 leading-relaxed">
+          Automatizaciones que conectan tus herramientas y eliminan tareas
+          repetitivas del día a día.
+        </p>
+      </article>
+
+      <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-cyan/60 rounded-xl p-6 transition-all group">
+        <div className="w-11 h-11 rounded-lg bg-cyber-cyan/10 border border-cyber-cyan/20 flex items-center justify-center text-cyber-cyan mb-5">
+          <i className="fa-solid fa-inbox text-xl"></i>
+        </div>
+
+        <h2 className="text-lg font-bold mb-2 group-hover:text-cyber-cyan transition-colors">
+          Inbox
+        </h2>
+
+        <p className="text-sm text-slate-400 leading-relaxed">
+          Bandeja unificada: centralizá las consultas de tus clientes desde
+          distintos canales en un solo lugar.
+        </p>
+      </article>
+
+      <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-purple/60 rounded-xl p-6 transition-all group">
+        <div className="w-11 h-11 rounded-lg bg-cyber-purple/10 border border-cyber-purple/20 flex items-center justify-center text-cyber-purple mb-5">
+          <i className="fa-solid fa-chart-line text-xl"></i>
+        </div>
+
+        <h2 className="text-lg font-bold mb-2 group-hover:text-cyber-purple transition-colors">
+          Pulse
+        </h2>
+
+        <p className="text-sm text-slate-400 leading-relaxed">
+          Métricas e indicadores de tu negocio en un panel simple, para
+          decidir con información real.
+        </p>
+      </article>
+    </div>
+
+    <div className="bg-linear-to-r from-cyber-purple/10 via-cyber-blue/10 to-cyber-cyan/10 border border-cyber-border rounded-xl p-5 sm:p-7 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+      <div>
+        <h2 className="text-xl font-bold mb-2">
+          ¿Querés probarlo en tu empresa?
+        </h2>
+
+        <p className="text-sm text-slate-400">
+          Estamos sumando pilotos a ORBIDEV Core. Contanos tu rubro y te
+          armamos un acceso de prueba sin costo.
+        </p>
+      </div>
+
+      <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+        <button
+          onClick={() => startContact('core')}
+          className="bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer"
+        >
+          <i className="fa-regular fa-comment-dots"></i>
+          Solicitar demo
+        </button>
+
+        <a
+          href="https://wa.me/59899452312?text=Hola%2C%20quiero%20probar%20ORBIDEV%20Core"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="border border-cyber-emerald/50 hover:border-cyber-emerald text-cyber-emerald font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer"
+        >
+          <i className="fa-brands fa-whatsapp"></i>
+          Escribinos por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+)}
+            {/* =========================================================
               SECCIÓN: CONTACTO
           ========================================================== */}
 {activeTab === 'soporte' && (
@@ -1359,6 +1552,40 @@ ${ticket.desc || 'Quiero recibir más información.'}
             Explicamos cada propuesta sin tecnicismos innecesarios y con pasos
             concretos.
           </p>
+        </div>
+
+        <div className="bg-cyber-dark/40 border border-cyber-border rounded-xl p-5">
+          <div className="w-10 h-10 rounded-lg bg-cyber-blue/10 border border-cyber-blue/20 flex items-center justify-center text-cyber-blue mb-4">
+            <i className="fa-brands fa-whatsapp"></i>
+          </div>
+
+          <h2 className="font-bold mb-2">
+            Contacto directo
+          </h2>
+
+          <p className="text-sm text-slate-400 leading-relaxed mb-3">
+            También podés escribirnos directamente, sin pasar por el
+            formulario.
+          </p>
+
+          <div className="flex flex-col gap-2 text-sm font-mono">
+            <a
+              href="https://wa.me/59899452312"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cyber-emerald hover:text-cyber-emerald/80 flex items-center gap-2 transition-colors"
+            >
+              <i className="fa-brands fa-whatsapp"></i>
+              +598 99 452 312
+            </a>
+            <a
+              href="mailto:hola@orbidev.uy"
+              className="text-cyber-cyan hover:text-cyber-cyan/80 flex items-center gap-2 transition-colors"
+            >
+              <i className="fa-solid fa-envelope"></i>
+              hola@orbidev.uy
+            </a>
+          </div>
         </div>
       </div>
 
@@ -1509,6 +1736,10 @@ ${ticket.desc || 'Quiero recibir más información.'}
               }
               className="w-full bg-cyber-dark border border-cyber-border rounded-lg px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyber-cyan"
             >
+              <option value="core">
+                ORBIDEV Core — quiero una demo
+              </option>
+
               <option value="reserva">
                 ORBIDEV Reserva — piloto
               </option>
