@@ -356,7 +356,7 @@ Consulta:
 ${ticket.desc || 'Quiero recibir más información.'}
   `.trim();
 
-  const whatsappUrl = `https://wa.me/59899452312?text=${encodeURIComponent(message)}`;
+  const whatsappUrl = `https://wa.me/59899471903?text=${encodeURIComponent(message)}`;
 
   window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 };
@@ -593,7 +593,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
                 <i className="fa-brands fa-facebook-f"></i>
               </a>
               <a
-                href="https://wa.me/59899452312"
+                href="https://wa.me/59899471903"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Escribinos por WhatsApp"
@@ -1476,7 +1476,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
         </button>
 
         <a
-          href="https://wa.me/59899452312?text=Hola%2C%20quiero%20probar%20ORBIDEV%20Core"
+          href="https://wa.me/59899471903?text=Hola%2C%20quiero%20probar%20ORBIDEV%20Core"
           target="_blank"
           rel="noopener noreferrer"
           className="border border-cyber-emerald/50 hover:border-cyber-emerald text-cyber-emerald font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer"
@@ -1570,13 +1570,13 @@ ${ticket.desc || 'Quiero recibir más información.'}
 
           <div className="flex flex-col gap-2 text-sm font-mono">
             <a
-              href="https://wa.me/59899452312"
+              href="https://wa.me/59899471903"
               target="_blank"
               rel="noopener noreferrer"
               className="text-cyber-emerald hover:text-cyber-emerald/80 flex items-center gap-2 transition-colors"
             >
               <i className="fa-brands fa-whatsapp"></i>
-              +598 99 452 312
+              +598 99 471 903
             </a>
             <a
               href="mailto:hola@orbidev.uy"
