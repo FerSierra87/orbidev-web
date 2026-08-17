@@ -27,6 +27,12 @@ const initialTicket = {
   tipo: 'landing',
 };
 
+// URL pública de ORBIDEV Inbox. Sin secreto involucrado: el endpoint
+// /api/v1/public/contact no requiere autenticación (ver
+// orbidev-inbox/backend), así que es seguro llamarlo directo desde acá.
+const INBOX_API_URL =
+  import.meta.env.VITE_INBOX_API_URL ?? 'https://orbidev-inbox-api-production.up.railway.app';
+
 export default function App() {
   // ============================================================
   // NAVEGACIÓN Y RUTAS
@@ -346,6 +352,24 @@ ${ticket.desc || 'Quiero recibir más información.'}
 
   window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 };
+
+  // Mejor esfuerzo: nunca debe bloquear ni romper el envío real del
+  // formulario (que sigue yendo por Formspree, ver handleFormSubmit). Si
+  // Inbox está caído o tarda, el error se descarta en silencio.
+  const notifyInboxOnContact = () => {
+    const selectedService = serviceLabels[ticket.tipo] || 'Consulta general';
+    fetch(`${INBOX_API_URL}/api/v1/public/contact`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: ticket.name || 'Sin nombre',
+        email: ticket.email || undefined,
+        message: `${ticket.company ? `Empresa: ${ticket.company}. ` : ''}Servicio: ${selectedService}. ${
+          ticket.desc || 'Sin detalle.'
+        }`,
+      }),
+    }).catch(() => {});
+  };
 
   const startContact = (service = 'otro') => {
     setTicket((currentTicket) => ({ ...currentTicket, tipo: service }));
@@ -1374,7 +1398,10 @@ ${ticket.desc || 'Quiero recibir más información.'}
         </div>
       ) : (
         <form
-          onSubmit={handleFormSubmit}
+          onSubmit={(event) => {
+            notifyInboxOnContact();
+            handleFormSubmit(event);
+          }}
           className="space-y-5 bg-cyber-dark/40 border border-cyber-border p-5 sm:p-8 rounded-xl"
         >
           <input
