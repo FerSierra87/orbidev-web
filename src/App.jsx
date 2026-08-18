@@ -1544,10 +1544,20 @@ ${ticket.desc || 'Quiero recibir más información.'}
           Reserva
         </h2>
 
-        <p className="text-sm text-slate-400 leading-relaxed">
+        <p className="text-sm text-slate-400 leading-relaxed mb-4">
           Agenda online para que tus clientes reserven turnos o servicios
           solos, sin llamadas ni mensajes de ida y vuelta.
         </p>
+
+        <a
+          href="https://reserva.orbidev.uy"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-xs font-mono text-cyber-purple hover:text-cyber-purple/80 transition-colors"
+        >
+          Probar la demo
+          <i className="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+        </a>
       </article>
 
       <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-blue/60 rounded-xl p-6 transition-all group">
@@ -1559,10 +1569,20 @@ ${ticket.desc || 'Quiero recibir más información.'}
           Catálogo
         </h2>
 
-        <p className="text-sm text-slate-400 leading-relaxed">
+        <p className="text-sm text-slate-400 leading-relaxed mb-4">
           Catálogo digital con plantillas por rubro, para mostrar y vender tus
           productos sin fricción.
         </p>
+
+        <a
+          href="https://catalogo.orbidev.uy/demo"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-xs font-mono text-cyber-blue hover:text-cyber-blue/80 transition-colors"
+        >
+          Probar la demo
+          <i className="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+        </a>
       </article>
 
       <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-emerald/60 rounded-xl p-6 transition-all group">

@@ -1,0 +1,32 @@
+name: Uptime - backends ORBIDEV
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping cada backend
+        run: |
+          urls=(
+            "Core|https://orbidev-core-api-production.up.railway.app/"
+            "Catalogo|https://orbidev-catalogo-api-production.up.railway.app/"
+            "Flow|https://orbidev-flow-api-production.up.railway.app/"
+            "Inbox|https://orbidev-inbox-api-production.up.railway.app/"
+            "Pulse|https://orbidev-pulse-api-production.up.railway.app/"
+          )
+          failed=0
+          for entry in "${urls[@]}"; do
+            name="${entry%%|*}"
+            url="${entry##*|}"
+            if curl -sS -o /dev/null --max-time 15 --retry 2 --retry-delay 3 "$url"; then
+              echo "OK   $name  ($url)"
+            else
+              echo "DOWN $name  ($url) - sin respuesta"
+              failed=1
+            fi
+          done
+          exit $failed
