@@ -1273,6 +1273,127 @@ ${ticket.desc || 'Quiero recibir más información.'}
     </div>
 
             {/* =========================================================
+              SECCIÓN: AUTOMATIZACIONES PARA PYMES
+          ========================================================== */}
+    <div className="space-y-6">
+      <div className="space-y-3">
+        <span className="text-xs font-mono tracking-[0.2em] text-cyber-cyan">
+          // AUTOMATIZACIÓN & EFICIENCIA
+        </span>
+
+        <h2 className="text-2xl sm:text-3xl font-display font-bold">
+          Automatizaciones para PyMEs
+        </h2>
+
+        <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-3xl">
+          Eliminamos tareas repetitivas conectando tus herramientas actuales.
+          Menos carga manual, menos errores y más tiempo para hacer crecer tu
+          negocio.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-cyan/60 rounded-xl p-6 transition-all group">
+          <span className="text-[10px] sm:text-xs font-mono text-cyber-cyan block mb-3">
+            01 / VENTAS &amp; ATENCIÓN
+          </span>
+
+          <h3 className="text-lg font-bold mb-2 group-hover:text-cyber-cyan transition-colors">
+            Captura y derivación de consultas
+          </h3>
+
+          <p className="text-sm text-slate-400 leading-relaxed mb-4">
+            Formularios y chats sincronizados con planillas o CRM, con
+            alertas inmediatas al equipo comercial apenas entra una consulta
+            nueva.
+          </p>
+
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono border border-cyber-cyan/30 bg-cyber-cyan/10 text-cyber-cyan">
+            Respuesta inmediata
+          </span>
+        </article>
+
+        <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-purple/60 rounded-xl p-6 transition-all group">
+          <span className="text-[10px] sm:text-xs font-mono text-cyber-purple block mb-3">
+            02 / ADMINISTRACIÓN
+          </span>
+
+          <h3 className="text-lg font-bold mb-2 group-hover:text-cyber-purple transition-colors">
+            Generación automática de documentos
+          </h3>
+
+          <p className="text-sm text-slate-400 leading-relaxed mb-4">
+            Presupuestos, reportes y órdenes de trabajo en PDF, con envío
+            directo por email o WhatsApp sin armarlos a mano.
+          </p>
+
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono border border-cyber-purple/30 bg-cyber-purple/10 text-cyber-purple">
+            0 min en armado manual
+          </span>
+        </article>
+
+        <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-emerald/60 rounded-xl p-6 transition-all group">
+          <span className="text-[10px] sm:text-xs font-mono text-cyber-emerald block mb-3">
+            03 / FINANZAS
+          </span>
+
+          <h3 className="text-lg font-bold mb-2 group-hover:text-cyber-emerald transition-colors">
+            Recordatorios de pago y vencimientos
+          </h3>
+
+          <p className="text-sm text-slate-400 leading-relaxed mb-4">
+            Detección programada de vencimientos y avisos automáticos y
+            amables a tus clientes, sin que nadie tenga que acordarse.
+          </p>
+
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono border border-cyber-emerald/30 bg-cyber-emerald/10 text-cyber-emerald">
+            Cobranzas a tiempo
+          </span>
+        </article>
+
+        <article className="bg-cyber-dark/40 border border-cyber-border hover:border-cyber-blue/60 rounded-xl p-6 transition-all group">
+          <span className="text-[10px] sm:text-xs font-mono text-cyber-blue block mb-3">
+            04 / CONTROL
+          </span>
+
+          <h3 className="text-lg font-bold mb-2 group-hover:text-cyber-blue transition-colors">
+            Reportes ejecutivos semanales
+          </h3>
+
+          <p className="text-sm text-slate-400 leading-relaxed mb-4">
+            Consolidación automática de ventas, stock y pendientes, enviada
+            los lunes a primera hora directo a tu correo.
+          </p>
+
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono border border-cyber-blue/30 bg-cyber-blue/10 text-cyber-blue">
+            Números claros sin esfuerzo
+          </span>
+        </article>
+      </div>
+
+      <div className="bg-linear-to-r from-cyber-purple/10 via-cyber-blue/10 to-cyber-cyan/10 border border-cyber-border rounded-xl p-5 sm:p-7 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+        <div>
+          <h3 className="text-xl font-bold mb-2">
+            ¿Tenés una tarea repetitiva en tu empresa?
+          </h3>
+
+          <p className="text-sm text-slate-400">
+            Evaluamos tu flujo de trabajo y te proponemos una primera
+            automatización simple.
+          </p>
+        </div>
+
+        <button
+          onClick={() => startContact('automatizacion')}
+          className="bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0"
+        >
+          <i className="fa-regular fa-comment-dots"></i>
+          Analizar mi proceso
+        </button>
+      </div>
+    </div>
+
+            {/* =========================================================
               SECCIÓN: PREGUNTAS FRECUENTES
           ========================================================== */}
     <div className="space-y-5">
