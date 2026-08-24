@@ -14,10 +14,10 @@ import {
   trackPageView,
 } from './analytics.js';
 
-// Carga diferida: Three.js/GSAP pesan ~260kB gzip, no deben bloquear el
-// render inicial de la página. Se baja en segundo plano después del
-// primer paint; hasta entonces el fondo cyber existente queda tal cual.
-const BlackHoleHero = lazy(() => import('./BlackHoleHero.jsx'));
+// Carga diferida: Three.js pesa bastante y no debe bloquear el render
+// inicial de la página. Se baja en segundo plano después del primer
+// paint; hasta entonces el fondo cyber existente queda tal cual.
+const OrbitalHero = lazy(() => import('./OrbitalHero.jsx'));
 
 const initialTicket = {
   name: '',
@@ -731,7 +731,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
       del título y los botones - no se superpone al texto. */}
   <div className="relative isolate overflow-hidden rounded-2xl border border-cyber-border h-56 sm:h-72 md:h-[420px] mt-2">
     <Suspense fallback={null}>
-      <BlackHoleHero />
+      <OrbitalHero />
     </Suspense>
   </div>
 </div>
