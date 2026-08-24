@@ -33,6 +33,11 @@ const initialTicket = {
 const INBOX_API_URL =
   import.meta.env.VITE_INBOX_API_URL ?? 'https://orbidev-inbox-api-production.up.railway.app';
 
+// Panel de ORBIDEV Core. Se muestra en la web para que un cliente que ya
+// tiene cuenta (piloto o suscripción) pueda entrar sin depender del link
+// que se le pasó por WhatsApp o mail.
+const CORE_APP_URL = 'https://app.orbidev.uy';
+
 export default function App() {
   // ============================================================
   // NAVEGACIÓN Y RUTAS
@@ -449,11 +454,25 @@ ${ticket.desc || 'Quiero recibir más información.'}
           </button>
         </div>
         
-        {/* CONTROLES DE LA VENTANA */}
-        <div className="flex items-center gap-2" aria-hidden="true">
-          <span className="w-3 h-3 rounded-full bg-red-500/80 cursor-pointer block hover:bg-red-500"></span>
-          <span className="w-3 h-3 rounded-full bg-yellow-500/80 cursor-pointer block hover:bg-yellow-500"></span>
-          <span className="w-3 h-3 rounded-full bg-green-500/80 cursor-pointer block hover:bg-green-500"></span>
+        <div className="flex items-center gap-3 sm:gap-4">
+          {/* Acceso al panel para clientes que ya tienen cuenta */}
+          <a
+            href={CORE_APP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Entrar al panel de ORBIDEV Core"
+            className="h-11 min-w-11 px-3 flex items-center justify-center gap-2 rounded-lg border border-cyber-cyan/40 hover:border-cyber-cyan bg-cyber-cyan/5 hover:bg-cyber-cyan/10 text-cyber-cyan font-mono text-xs transition-all"
+          >
+            <i className="fa-solid fa-right-to-bracket"></i>
+            <span className="hidden sm:inline">ACCEDER</span>
+          </a>
+
+          {/* CONTROLES DE LA VENTANA */}
+          <div className="hidden md:flex items-center gap-2" aria-hidden="true">
+            <span className="w-3 h-3 rounded-full bg-red-500/80 cursor-pointer block hover:bg-red-500"></span>
+            <span className="w-3 h-3 rounded-full bg-yellow-500/80 cursor-pointer block hover:bg-yellow-500"></span>
+            <span className="w-3 h-3 rounded-full bg-green-500/80 cursor-pointer block hover:bg-green-500"></span>
+          </div>
         </div>
       </div>
 
@@ -568,6 +587,28 @@ ${ticket.desc || 'Quiero recibir más información.'}
   <span>05_CONTACTO</span>
 </NavLink>
 
+            {/* Acceso al panel: separado de la navegación del sitio
+                porque lleva a otra aplicación, no a una sección de acá. */}
+            <div className="pt-4 mt-2 border-t border-cyber-border">
+              <span className="text-[10px] font-mono tracking-widest text-slate-500 block px-3 mb-2">
+                YA SOS CLIENTE
+              </span>
+
+              <a
+                href={CORE_APP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsSidebarOpen(false)}
+                className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-mono text-sm border border-cyber-cyan/40 hover:border-cyber-cyan bg-cyber-cyan/5 hover:bg-cyber-cyan/10 text-cyber-cyan transition-all"
+              >
+                <i className="fa-solid fa-right-to-bracket text-xs"></i>
+                <span>ENTRAR AL PANEL</span>
+              </a>
+
+              <p className="text-[10px] text-slate-500 leading-relaxed px-3 mt-2">
+                app.orbidev.uy
+              </p>
+            </div>
           </div>
 
           {/* Redes sociales */}
@@ -1763,6 +1804,28 @@ ${ticket.desc || 'Quiero recibir más información.'}
           Escribinos por WhatsApp
         </a>
       </div>
+    </div>
+
+    <div className="border border-cyber-border rounded-xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div>
+        <h2 className="font-bold mb-1">
+          ¿Ya tenés una cuenta?
+        </h2>
+
+        <p className="text-sm text-slate-400">
+          Entrá al panel de ORBIDEV Core con tu usuario y contraseña.
+        </p>
+      </div>
+
+      <a
+        href={CORE_APP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="border border-cyber-cyan/50 hover:border-cyber-cyan bg-cyber-cyan/5 hover:bg-cyber-cyan/10 text-cyber-cyan font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all shrink-0"
+      >
+        <i className="fa-solid fa-right-to-bracket"></i>
+        Entrar al panel
+      </a>
     </div>
   </div>
 )}
