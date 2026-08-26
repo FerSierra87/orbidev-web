@@ -1100,11 +1100,11 @@ ${ticket.desc || 'Quiero recibir más información.'}
                   <div className="space-y-3 max-w-2xl">
                     <span className="inline-flex items-center gap-2 text-[10px] font-mono tracking-[0.18em] text-cyber-emerald">
                       <span className="w-1.5 h-1.5 rounded-full bg-cyber-emerald animate-pulse"></span>
-                      PRODUCTO ORBIDEV · PILOTO
+                      PRODUCTO ORBIDEV · EN MARCHA
                     </span>
                     <h2 className="text-2xl sm:text-3xl font-display font-bold">ORBIDEV Reserva</h2>
                     <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
-                      Gestión de reservas pensada para comercios y profesionales que quieren ordenar su agenda y ofrecer turnos online. Estamos preparando el piloto con cupos limitados.
+                      Gestión de reservas pensada para comercios y profesionales que quieren ordenar su agenda y ofrecer turnos online. Ya está funcionando con nuestro primer cliente y sumamos nuevos cupos.
                     </p>
                   </div>
                   <button
@@ -1113,7 +1113,7 @@ ${ticket.desc || 'Quiero recibir más información.'}
                     className="bg-cyber-purple hover:bg-cyber-purple/80 text-white font-mono px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0"
                   >
                     <i className="fa-regular fa-calendar-check"></i>
-                    CONSULTAR POR EL PILOTO
+                    SUMARME AL PILOTO
                   </button>
                 </div>
               </section>
