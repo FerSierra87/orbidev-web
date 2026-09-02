@@ -11,22 +11,21 @@ jobs:
     steps:
       - name: Ping cada backend
         run: |
+          # Solo los backends activos. Flow, Inbox y Pulse estan pausados
+          # a proposito; para volver a vigilarlos, agregar su linea aca.
           urls=(
-            "Core|https://orbidev-core-api-production.up.railway.app/"
-            "Catalogo|https://orbidev-catalogo-api-production.up.railway.app/"
-            "Flow|https://orbidev-flow-api-production.up.railway.app/"
-            "Inbox|https://orbidev-inbox-api-production.up.railway.app/"
-            "Pulse|https://orbidev-pulse-api-production.up.railway.app/"
+            "Core|https://orbidev-core-api-production.up.railway.app/api/health"
+            "Catalogo|https://orbidev-catalogo-api-production.up.railway.app/api/health"
           )
           failed=0
           for entry in "${urls[@]}"; do
             name="${entry%%|*}"
             url="${entry##*|}"
-            if curl -sS -o /dev/null --max-time 15 --retry 2 --retry-delay 3 "$url"; then
-              echo "OK   $name  ($url)"
-            else
-              echo "DOWN $name  ($url) - sin respuesta"
-              failed=1
-            fi
+            # -f hace que curl falle ante un status HTTP >= 400.
+            # Sin esta bandera, un 403 o un 500 se contaban como exito.
+            code=$(curl -sS -f -o /dev/null -w '%{http_code}' \
+              --max-time 15 --retry 2 --retry-delay 3 "$url") \
+              && echo "OK   $name  ($url) -> $code" \
+              || { echo "DOWN $name  ($url) - status ${code:-sin respuesta}"; failed=1; }
           done
           exit $failed
